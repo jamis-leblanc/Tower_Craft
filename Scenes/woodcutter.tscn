@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/building.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/woodcutter.gd" type="Script" id=2]
+[ext_resource path="res://GFX/TileSet_Structures.png" type="Texture" id=3]
+
+[node name="woodcutter" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 3 )
+vframes = 3
+hframes = 6
+frame = 1
+
+[node name="Spawn_cooldown" type="Timer" parent="." index="1"]
+wait_time = 10.0
+autostart = true
+[connection signal="timeout" from="Spawn_cooldown" to="." method="_on_Spawn_cooldown_timeout"]

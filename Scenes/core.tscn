@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/building.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/core.gd" type="Script" id=2]
+[ext_resource path="res://GFX/TileSet_Structures.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 48, 48 )
+
+[node name="core" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 3 )
+offset = Vector2( -16, -16 )
+vframes = 2
+hframes = 4
+frame = 4
+
+[node name="Label" type="Label" parent="." index="1"]
+visible = false
+margin_left = -64.0
+margin_top = -32.0
+margin_right = -24.0
+margin_bottom = -18.0
+text = "[Node2D:XXXX]"
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2( -16, -16 )
+shape = SubResource( 1 )
+
+[node name="UI_anchor" parent="." index="3"]
+position = Vector2( 32, -64 )
