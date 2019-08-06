@@ -30,4 +30,4 @@ position = Vector2( -16, -16 )
 shape = SubResource( 1 )
 
 [node name="UI_anchor" parent="." index="3"]
-position = Vector2( 32, -64 )
+position = Vector2( 64, -64 )

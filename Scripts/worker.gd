@@ -31,7 +31,7 @@ var carried_max = 20
 
 
 onready var nav = get_parent().get_node("nav")
-onready var map = get_parent().get_node("nav/map_structure")
+#onready var map = get_parent().get_node("nav/map_structure")
 onready var map_char = get_parent().get_node("map_char")
 onready var mytile  = map.world_to_map(self.position)
 onready var old_tile = mytile

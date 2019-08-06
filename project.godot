@@ -22,6 +22,8 @@ config/icon="res://icon.png"
 [autoload]
 
 worker_manager="*res://Scripts/worker_manager.gd"
+structure_manager="*res://Scripts/structure_manager.gd"
+enums="*res://Scripts/enums.gd"
 
 [display]
 

@@ -6,16 +6,18 @@ var size = 2
 var tile_index = 8
 var offset = floor(size/2)
 var tile_offset = Vector2(-1,-1)
-var UI_offset = Vector2(32,-32)
+var UI_offset = Vector2(64,-32)
 var tile = null
 var is_valid = true
 var UI_on = false
+var UI_instance = null
 var _name = "Building"
+var popup_UI = "res://Scenes/Popup_regular_building.tscn"
 
 var reference = "res://Scenes/forester.tscn"
 
 onready var map = get_parent().get_node("nav/map_structure")
-onready var structure_manager = get_parent().get_node("structure_manager")
+#onready var structure_manager = get_parent().get_node("structure_manager")
 
 signal add_structure_to_tilemap(x,y,reference)
 #signal signal_send()
@@ -58,12 +60,17 @@ func check_position_validity():
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton \
 	and event.button_index == BUTTON_LEFT \
-	and event.is_pressed() \
-	and UI_on == false :
-		UI_on = true
-		var instance = load("res://Scenes/Popup_building_info.tscn").instance()
-		get_node("UI_anchor").add_child(instance)
-		instance.find_node("_name").text = _name
+	and event.is_pressed() :
+		if UI_on == false :
+			UI_on = true
+			UI_instance = load(popup_UI).instance()
+			UI_instance.set_z_index(10)
+			print(UI_instance.z_index)
+			get_node("UI_anchor").add_child(UI_instance)
+			UI_instance.find_node("_name").text = _name
+		else :
+			UI_on = false
+			UI_instance.queue_free()
 
 
 
