@@ -17,7 +17,7 @@ func _ready():
 		spawn_structure(i.x,i.y,"res://Scenes/core.tscn")
 	for i in map.get_used_cells_by_id(8):
 		spawn_structure(i.x,i.y,"res://Scenes/forester.tscn")
-#		new_castle(i.x,i.y)
+
 
 func new_tree(x,y,growth):
 	var tree = _Tree.new()
@@ -35,22 +35,27 @@ func spawn_structure(x,y,reference):
 	var instance = load(str(reference)).instance()
 	get_parent().call_deferred("add_child",instance)
 	instance.global_position = Vector2((x+(instance.offset+1))*32,(y+(instance.offset+1))*32)
-	instance.is_spawning = false
+	instance.state = enums.building_states.build
 	instance.get_node("Sprite").set_visible(false)
 	add_structure_to_tilemap(x,y,instance)
-
-
-func signal_received():
-	print("signal received")
 
 
 func add_structure_to_tilemap(x,y,reference):
 	for j in reference.size :
 		for i in reference.size :
 			map.set_cell(x+i,y+j,11)
-	map.set_cell(x,y,reference.tile_index)
 	structure_list[y*50+x] = reference
-	register_structure(x,y,reference)
+	#register_structure(x,y,reference)
+	#reference.get_node("Timer").start()
+	if reference.state != enums.building_states.build :
+		map.set_cell(x,y,reference.building_tile_index)
+		task_manager.new_task(enums.task_type.build,reference,reference.building_time)
+	else :
+		map.set_cell(x,y,reference.tile_index)
+		reference.state = enums.building_states.operate
+		reference.health = reference.health_max
+		reference.update_pbar()
+		
 
 
 func change_tile(x,y,index):

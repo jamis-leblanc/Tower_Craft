@@ -65,6 +65,26 @@ func remove_woodcutter_from_struc(structure):
 	get_tree().call_group("UI", "_update")
 
 
+func add_builder():
+	for i in workers_list :
+		if i[1] == enums.jobs.jobless:
+			i[0].change_job(enums.jobs.builder)
+			i[1] = enums.jobs.builder
+			task_manager.add_builder(i[0])
+			break
+	get_tree().call_group("UI", "_update")
+
+
+func remove_builder() :
+	var builder_removed = task_manager.remove_builder()
+	if builder_removed != null :
+		for i in workers_list :
+			if i[0] == builder_removed :
+				i[0].change_job(enums.jobs.jobless)
+				i[1] = enums.jobs.jobless
+	get_tree().call_group("UI", "_update")
+
+
 func add_woodcutter():
 	for i in workers_list :
 		if i[1] == enums.jobs.jobless:

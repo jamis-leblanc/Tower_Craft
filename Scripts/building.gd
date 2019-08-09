@@ -1,9 +1,10 @@
 extends Node2D
 
-var is_spawning = true
+var state = enums.building_states.prebuild
 var is_working = true
 var size = 2
 var tile_index = 8
+var building_tile_index = 14
 var offset = floor(size/2)
 var tile_offset = Vector2(-1,-1)
 var UI_offset = Vector2(64,-32)
@@ -11,25 +12,28 @@ var tile = null
 var is_valid = true
 var UI_on = false
 var UI_instance = null
+var building_time = 1
 var _name = "Building"
 var popup_UI = "res://Scenes/Popup_regular_building.tscn"
+var health = 0
+var health_max = 100
 
 var reference = "res://Scenes/forester.tscn"
 
 onready var map = get_parent().get_node("nav/map_structure")
-#onready var structure_manager = get_parent().get_node("structure_manager")
 
 signal add_structure_to_tilemap(x,y,reference)
-#signal signal_send()
 
 func _ready():
 	self.connect("add_structure_to_tilemap",structure_manager,"add_structure_to_tilemap")
-	#self.connect("signal_send",structure_manager,"signal_received")
 
 
 func _process(delta):
-	if is_spawning == true :
+	$Label.text = str(state)
+	if state == enums.building_states.spawn :
 		follow_cursor()
+	if state == enums.building_states.operate and $Sprite.visible == false :
+		$Sprite.set_visible(true)
 
 
 func follow_cursor():
@@ -40,10 +44,9 @@ func follow_cursor():
 	check_position_validity()
 	if Input.is_action_just_pressed("mouse_left_clic") and is_valid == true:
 		self.emit_signal("add_structure_to_tilemap",tile.x-offset-1,tile.y-offset-1,self)
-		#self.emit_signal("signal_send")
-		is_spawning = false
-		
-		
+		state = enums.building_states.build
+		$Sprite.set_visible(false)
+
 
 func check_position_validity():
 	is_valid = true
@@ -56,11 +59,11 @@ func check_position_validity():
 	else  : 				$Sprite.set_self_modulate(Color(1,1,1,1))
 
 
-
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton \
 	and event.button_index == BUTTON_LEFT \
-	and event.is_pressed() :
+	and event.is_pressed() \
+	and state == enums.building_states.operate :
 		if UI_on == false :
 			UI_on = true
 			UI_instance = load(popup_UI).instance()
@@ -73,13 +76,22 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 			UI_instance.queue_free()
 
 
+func repair(amount):
+	var repair = min(health_max-health,amount)
+	health += repair
+	update_pbar()
+	return repair
 
 
+func build_complete() :
+	state = enums.building_states.operate
+	structure_manager.change_tile(tile.x-offset-1,tile.y-offset-1,tile_index)
 
 
+func _on_Timer_timeout():
+	pass
 
 
-
-
-
-
+func update_pbar():
+	$ProgressBar.value = health
+	

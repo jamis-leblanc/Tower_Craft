@@ -21,7 +21,7 @@ rect_min_size = Vector2( 96, 96 )
 
 [node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
 margin_right = 104.0
-margin_bottom = 114.0
+margin_bottom = 134.0
 texture = ExtResource( 2 )
 patch_margin_left = 9
 patch_margin_top = 9
@@ -30,21 +30,21 @@ patch_margin_bottom = 9
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
 margin_right = 104.0
-margin_bottom = 114.0
+margin_bottom = 134.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer"]
 margin_right = 104.0
-margin_bottom = 114.0
+margin_bottom = 134.0
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/CenterContainer/HBoxContainer"]
 margin_right = 1.0
-margin_bottom = 114.0
+margin_bottom = 134.0
 rect_min_size = Vector2( 1, 0 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer"]
 margin_left = 5.0
 margin_right = 99.0
-margin_bottom = 114.0
+margin_bottom = 134.0
 rect_min_size = Vector2( 80, 50 )
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
@@ -130,10 +130,51 @@ margin_right = 94.0
 margin_bottom = 16.0
 texture_normal = ExtResource( 6 )
 
-[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
 margin_top = 74.0
 margin_right = 94.0
-margin_bottom = 106.0
+margin_bottom = 90.0
+
+[node name="Label3" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+margin_top = 4.0
+margin_right = 29.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 8 )
+custom_fonts/font = ExtResource( 4 )
+text = "Builders"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 33.0
+margin_right = 94.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Remove_builder_button" type="TextureButton" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer"]
+margin_left = 17.0
+margin_right = 33.0
+margin_bottom = 16.0
+texture_normal = ExtResource( 5 )
+
+[node name="nbr_builder" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer"]
+margin_left = 37.0
+margin_top = 4.0
+margin_right = 41.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 8 )
+custom_fonts/font = ExtResource( 4 )
+text = "0"
+
+[node name="Add_builder_button" type="TextureButton" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer"]
+margin_left = 45.0
+margin_right = 61.0
+margin_bottom = 16.0
+texture_normal = ExtResource( 6 )
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
+margin_top = 94.0
+margin_right = 94.0
+margin_bottom = 126.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -159,15 +200,15 @@ margin_bottom = 32.0
 texture_normal = ExtResource( 7 )
 
 [node name="TextureRect2" type="TextureRect" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
-margin_top = 110.0
+margin_top = 130.0
 margin_right = 94.0
-margin_bottom = 114.0
+margin_bottom = 134.0
 rect_min_size = Vector2( 0, 4 )
 
 [node name="TextureRect2" type="TextureRect" parent="MarginContainer/CenterContainer/HBoxContainer"]
 margin_left = 103.0
 margin_right = 104.0
-margin_bottom = 114.0
+margin_bottom = 134.0
 rect_min_size = Vector2( 1, 0 )
 
 [node name="TextureButton" type="TextureButton" parent="."]
@@ -180,5 +221,7 @@ margin_bottom = 10.0
 texture_normal = ExtResource( 8 )
 [connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer/Remove_Woodcutter_button" to="." method="_on_Remove_Woodcutter_button_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer/Add_Woodcutter_button" to="." method="_on_Add_Woodcutter_button_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer/Remove_builder_button" to="." method="_on_Remove_builder_button_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer/Add_builder_button" to="." method="_on_Add_builder_button_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/CenterContainer/HBoxContainer/add_worker" to="." method="_on_add_worker_pressed"]
 [connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

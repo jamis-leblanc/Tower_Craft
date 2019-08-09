@@ -18,6 +18,11 @@ onready var mytile  = map.world_to_map(p.position)
 
 var current_task = enums.task.idle
 
+
+func _process(delta):
+	p.get_node("Label").text = str(current_task)
+
+
 func find_target(type) :
 	var search_dist = 1
 	var cell_list = []
@@ -166,6 +171,20 @@ func harvest(my_target):
 		return false
 
 
+func build(my_target):
+	if is_instance_valid(my_target) :
+		if p.strike_ready == true :
+			var anim = "Strike_" + str(get_new_direction(p.global_position,Vector2(target_structure_cell[0]*32+16,target_structure_cell[1]*32+16)))
+			p.get_node("AnimationPlayer").play(anim)
+			repair(my_target,p.repair_amount)
+			p.strike_ready = false
+			p.get_node("strike_cooldown").start()
+		return true
+	else :
+		reset_target()
+		return false
+
+
 func damage(target,amount):
 	
 	amount = min(p.damage, p.carried_max-p.carried_ressource)
@@ -174,6 +193,12 @@ func damage(target,amount):
 
 	if incoming_ressource < amount :
 		target.free()
+
+
+func repair(target,amount):
+	var incoming_ressource = target.repair(amount)
+	if incoming_ressource < amount :
+		print("Build complete!")
 
 
 func unload(amount):

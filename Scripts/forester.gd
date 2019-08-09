@@ -20,7 +20,8 @@ func _ready():
 	self.connect("new_tree",structure_manager,"new_tree")
 
 func _process(delta):
-	if is_spawning == false : update_production()
+	if state == enums.building_states.operate:
+		update_production()
 
 
 func check_position_validity():

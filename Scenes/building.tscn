@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/building.gd" type="Script" id=1]
+[ext_resource path="res://small_font_16.tres" type="DynamicFont" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
@@ -17,4 +18,28 @@ shape = SubResource( 1 )
 
 [node name="UI_anchor" type="Position2D" parent="."]
 position = Vector2( 64, -32 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_left = -32.0
+margin_top = -48.0
+margin_right = 32.0
+margin_bottom = -34.0
+custom_fonts/font = ExtResource( 2 )
+percent_visible = false
+
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_left = -16.0
+margin_top = -64.0
+margin_right = 24.0
+margin_bottom = -50.0
+custom_fonts/font = ExtResource( 2 )
+text = "state"
+align = 1
+valign = 1
 [connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

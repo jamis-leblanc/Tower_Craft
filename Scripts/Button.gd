@@ -5,16 +5,19 @@ extends CanvasLayer
 
 func _on_Button_pressed():
 	var instance = load("res://Scenes/forester.tscn").instance()
+	instance.state = enums.building_states.spawn
 	get_tree().get_root().get_node("World").add_child(instance)
 
 
 func _on_Button2_pressed():
 	var instance = load("res://Scenes/core.tscn").instance()
+	instance.state = enums.building_states.spawn
 	get_tree().get_root().get_node("World").add_child(instance)
 
 
 func _on_Button3_pressed():
 	var instance = load("res://Scenes/woodcutter.tscn").instance()
+	instance.state = enums.building_states.spawn
 	get_tree().get_root().get_node("World").add_child(instance)
 
 

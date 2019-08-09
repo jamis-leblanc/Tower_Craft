@@ -2,7 +2,8 @@ extends Node2D
 
 
 onready var jobs  = {	0 : "Jobs/Jobless",
-						1 : "Jobs/Woodcutter"
+						1 : "Jobs/Woodcutter",
+						2 : "Jobs/Builder"
 						}
 
 
@@ -19,6 +20,7 @@ var at_home = false
 
 var strike_ready = true
 var damage = 2
+var repair_amount = 5
 var carried_ressource = 0
 var carried_max = 25
 
