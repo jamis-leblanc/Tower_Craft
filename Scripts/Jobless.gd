@@ -1,6 +1,7 @@
 extends "res://Scripts/StateMachine.gd"
 
 func start_job():
+	free_map_char_cell()
 	reset_target()
 	print("start jobless")
 	current_task = enums.task.seek_home

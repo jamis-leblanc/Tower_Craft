@@ -7,6 +7,8 @@ enum task {	idle,
 			seek_home,
 			go_home,
 			unload,
+			get_in,
+			get_out,
 			cultivate,
 			research,
 			operate,
@@ -15,9 +17,9 @@ enum task {	idle,
 enum jobs { 	jobless,
 				woodcutter,
 				builder,
+				scientist,
 				peasant,
-				defender,
-				scientist
+				defender
 			}
 
 enum building_states {	prebuild,

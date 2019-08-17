@@ -19,10 +19,6 @@ shape = SubResource( 1 )
 [node name="UI_anchor" type="Position2D" parent="."]
 position = Vector2( 64, -32 )
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-
 [node name="ProgressBar" type="ProgressBar" parent="."]
 margin_left = -32.0
 margin_top = -48.0
@@ -42,4 +38,3 @@ text = "state"
 align = 1
 valign = 1
 [connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

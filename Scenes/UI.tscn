@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Button.gd" type="Script" id=1]
 [ext_resource path="res://GFX/UI_wood_counter.png" type="Texture" id=2]
+[ext_resource path="res://GFX/wood_icon.png" type="Texture" id=3]
+[ext_resource path="res://GFX/food_icon.png" type="Texture" id=4]
+[ext_resource path="res://small_font_16.tres" type="DynamicFont" id=5]
 
 [node name="UI" type="CanvasLayer"]
 scale = Vector2( 2, 2 )
@@ -15,19 +18,26 @@ margin_right = 108.0
 margin_bottom = 34.0
 text = "Forester Hut"
 
-[node name="Button2" type="Button" parent="."]
-margin_left = 16.0
-margin_top = 48.0
-margin_right = 108.0
-margin_bottom = 68.0
-text = "Core"
-
 [node name="Button3" type="Button" parent="."]
 margin_left = 16.0
-margin_top = 80.0
+margin_top = 37.5
 margin_right = 108.0
-margin_bottom = 100.0
+margin_bottom = 57.5
 text = "Woodcutter"
+
+[node name="Button4" type="Button" parent="."]
+margin_left = 16.0
+margin_top = 62.0
+margin_right = 108.0
+margin_bottom = 82.0
+text = "Farm"
+
+[node name="Button5" type="Button" parent="."]
+margin_left = 15.5
+margin_top = 85.5
+margin_right = 107.5
+margin_bottom = 105.5
+text = "Laboratory"
 
 [node name="Label" type="Label" parent="."]
 margin_left = 728.0
@@ -42,18 +52,96 @@ margin_bottom = 32.0
 texture = ExtResource( 2 )
 
 [node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
-margin_left = 53.0
-margin_top = 9.0
-margin_right = 61.0
-margin_bottom = 23.0
+margin_left = 10.0
+margin_top = 8.0
 
-[node name="Wood_Label" type="Label" parent="TextureRect/MarginContainer"]
-margin_right = 8.0
-margin_bottom = 14.0
+[node name="HBoxContainer2" type="HBoxContainer" parent="TextureRect/MarginContainer"]
+margin_right = 118.0
+margin_bottom = 16.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect/MarginContainer/HBoxContainer2"]
+editor/display_folded = true
+margin_right = 28.0
+margin_bottom = 16.0
+
+[node name="Wood_Icon" type="TextureRect" parent="TextureRect/MarginContainer/HBoxContainer2/HBoxContainer"]
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 3 )
+
+[node name="Wood_Label" type="Label" parent="TextureRect/MarginContainer/HBoxContainer2/HBoxContainer"]
+margin_left = 20.0
+margin_top = 1.0
+margin_right = 28.0
+margin_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "0"
 align = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TextureRect/MarginContainer/HBoxContainer2"]
+editor/display_folded = true
+margin_left = 32.0
+margin_right = 73.0
+margin_bottom = 16.0
+
+[node name="Food_Icon" type="TextureRect" parent="TextureRect/MarginContainer/HBoxContainer2/HBoxContainer2"]
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 4 )
+
+[node name="Food_Label" type="Label" parent="TextureRect/MarginContainer/HBoxContainer2/HBoxContainer2"]
+margin_left = 20.0
+margin_top = 1.0
+margin_right = 41.0
+margin_bottom = 15.0
+text = "0/0"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="TextureRect/MarginContainer/HBoxContainer2"]
+margin_left = 77.0
+margin_right = 105.0
+margin_bottom = 16.0
+
+[node name="Research_Icon" type="TextureRect" parent="TextureRect/MarginContainer/HBoxContainer2/HBoxContainer3"]
+modulate = Color( 0.105882, 0.517647, 1, 1 )
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 3 )
+
+[node name="Research_Label" type="Label" parent="TextureRect/MarginContainer/HBoxContainer2/HBoxContainer3"]
+margin_left = 20.0
+margin_top = 1.0
+margin_right = 28.0
+margin_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+align = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+editor/display_folded = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -800.0
+margin_bottom = -257.0
+mouse_filter = 2
+
+[node name="pop_up_notif" type="Label" parent="CenterContainer"]
+visible = false
+margin_left = 330.0
+margin_top = 319.0
+margin_right = 470.0
+margin_bottom = 323.0
+custom_fonts/font = ExtResource( 5 )
+text = "********Pop-up notification ********"
+align = 1
+valign = 1
+
+[node name="pop_up_timer" type="Timer" parent="CenterContainer"]
+wait_time = 4.0
+one_shot = true
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
-[connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
 [connection signal="pressed" from="Button3" to="." method="_on_Button3_pressed"]
+[connection signal="pressed" from="Button4" to="." method="_on_Button4_pressed"]
+[connection signal="pressed" from="Button5" to="." method="_on_Button5_pressed"]
+[connection signal="timeout" from="CenterContainer/pop_up_timer" to="." method="_on_pop_up_timer_timeout"]

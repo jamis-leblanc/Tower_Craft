@@ -13,11 +13,11 @@ func _update():
 
 
 func _on_Add_Woodcutter_button_pressed():
-	worker_manager.add_woodcutter_to_struc(parent)
+	worker_manager.add_worker_to_struct(enums.jobs.woodcutter,parent)
 
 
 func _on_Remove_Woodcutter_button_pressed():
-	worker_manager.remove_woodcutter_from_struc(parent)
+	worker_manager.remove_worker_from_struc(enums.jobs.woodcutter,parent)
 	
 	
 func _on_TextureButton_pressed():

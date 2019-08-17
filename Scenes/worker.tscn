@@ -1,10 +1,11 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Scripts/worker2.gd" type="Script" id=1]
 [ext_resource path="res://GFX/worker_sprite.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/Jobless.gd" type="Script" id=3]
 [ext_resource path="res://Scripts/Job_Woodcutter.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/builder.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/job_scientist.gd" type="Script" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Idle"
@@ -985,6 +986,9 @@ script = ExtResource( 4 )
 [node name="Builder" type="Node" parent="Jobs"]
 script = ExtResource( 5 )
 
+[node name="Scientist" type="Node" parent="Jobs"]
+script = ExtResource( 6 )
+
 [node name="Label" type="Label" parent="."]
 visible = false
 anchor_left = 0.5
@@ -1024,5 +1028,10 @@ autostart = true
 
 [node name="seek_cooldown" type="Timer" parent="."]
 autostart = true
+
+[node name="research_cooldown" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
 [connection signal="timeout" from="strike_cooldown" to="." method="_on_strike_cooldown_timeout"]
 [connection signal="timeout" from="seek_cooldown" to="." method="_on_seek_cooldown_timeout"]
+[connection signal="timeout" from="research_cooldown" to="." method="_on_research_cooldown_timeout"]

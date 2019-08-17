@@ -157,6 +157,12 @@ func get_new_direction(start,end) :
 	if dir > -65 and dir <-25 : return("Up_Right")
 
 
+func research(my_target):
+	if p.research_ready == true : 
+		get_tree().get_root().get_node("World").add_research(1)
+		p.research_ready = false
+
+
 func harvest(my_target):
 	if is_instance_valid(my_target) :
 		if p.strike_ready == true :

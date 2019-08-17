@@ -17,17 +17,24 @@ vframes = 2
 hframes = 4
 frame = 4
 
-[node name="Label" type="Label" parent="." index="1"]
-visible = false
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2( -16, -16 )
+shape = SubResource( 1 )
+
+[node name="UI_anchor" parent="." index="2"]
+position = Vector2( 64, -64 )
+
+[node name="ProgressBar" parent="." index="3"]
+margin_left = -46.2222
+margin_top = -78.2222
+margin_right = 17.7778
+margin_bottom = -64.2222
+
+[node name="Label" parent="." index="4"]
 margin_left = -64.0
 margin_top = -32.0
 margin_right = -24.0
 margin_bottom = -18.0
 text = "[Node2D:XXXX]"
-
-[node name="CollisionShape2D" parent="Area2D" index="0"]
-position = Vector2( -16, -16 )
-shape = SubResource( 1 )
-
-[node name="UI_anchor" parent="." index="3"]
-position = Vector2( 64, -64 )
+align = 0
+valign = 0

@@ -18,6 +18,7 @@ func _update(delta):
 		
 		enums.task.seek_target:
 			if build_task != [] :
+				free_map_char_cell()
 				reset_target()
 				find_home_cell(build_task[1])
 				if target_cell == null:

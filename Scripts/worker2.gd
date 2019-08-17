@@ -3,12 +3,14 @@ extends Node2D
 
 onready var jobs  = {	0 : "Jobs/Jobless",
 						1 : "Jobs/Woodcutter",
-						2 : "Jobs/Builder"
+						2 : "Jobs/Builder",
+						3 : "Jobs/Scientist"
 						}
 
 
 var current_job = 0
 var ready_to_seek = false
+var research_ready = true
 
 var home_building = null
 
@@ -47,3 +49,7 @@ func _on_strike_cooldown_timeout():
 
 func _on_seek_cooldown_timeout():
 	ready_to_seek = true
+
+
+func _on_research_cooldown_timeout():
+	research_ready = true
