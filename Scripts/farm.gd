@@ -6,7 +6,7 @@ func _init():
 	food = 4
 	size = 2
 	cost = 100
-	tile_index = 13
+	tile_index = 16
 	offset = fmod(size,2)
 	_name = "Farm"
 

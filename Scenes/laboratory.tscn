@@ -1,23 +1,27 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/building.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/laboratory.gd" type="Script" id=2]
 [ext_resource path="res://GFX/TileSet_Structures.png" type="Texture" id=3]
 
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 48, 48 )
+
 [node name="laboratory" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="Sprite" parent="." index="0"]
-modulate = Color( 0.0705882, 0.270588, 0.556863, 1 )
-self_modulate = Color( 0, 0.431373, 0.811765, 1 )
 position = Vector2( -16, -16 )
 texture = ExtResource( 3 )
 vframes = 2
 hframes = 4
-frame = 4
+frame = 6
 
 [node name="Area2D" parent="." index="1"]
 position = Vector2( -16, -16 )
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource( 1 )
 
 [node name="UI_anchor" parent="." index="2"]
 position = Vector2( 64, -64 )

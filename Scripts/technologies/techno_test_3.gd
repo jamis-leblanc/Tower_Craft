@@ -2,17 +2,14 @@ extends "res://Scripts/technologies/technology.gd"
 
 
 func _init():
-	_name = "Techno test 3"
-	tooltip = "Technology test 3 tooltip"
-	cost = 50
-	parent = null
-	locked = true
-	bought = false
+	_name = "Increased\nspeed"
+	tooltip = "Increase the worker speed."
+	cost = 0
+	techno_ref = enums.techno.worker_speed
+	parent_techno_ref = enums.techno.harvest_amount
 
 
-func _ready():
-	pass # Replace with function body.
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func update_stat():
+	units_stats.worker_speed = 150
+	for i in worker_manager.workers_list :
+		i[0].speed = 150

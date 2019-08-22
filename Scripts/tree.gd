@@ -15,7 +15,7 @@ var growth_state = tree_state.small
 var step_1 = 5
 var step_2 = 10
 var tile = Vector2()
-var structure_manager = null
+#var structure_manager = null
 
 signal change_tile(x,y,index)
 

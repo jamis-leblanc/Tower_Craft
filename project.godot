@@ -22,9 +22,11 @@ config/icon="res://icon.png"
 [autoload]
 
 worker_manager="*res://Scripts/worker_manager.gd"
-structure_manager="*res://Scripts/structure_manager.gd"
 enums="*res://Scripts/enums.gd"
 task_manager="*res://Scripts/task_manager.gd"
+techno_manager="*res://Scripts/techno_manager.gd"
+units_stats="*res://Scripts/units_stats.gd"
+structure_manager="*res://Scenes/structure_manager.tscn"
 
 [display]
 

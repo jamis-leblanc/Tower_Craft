@@ -22,7 +22,7 @@ func new_tree(x,y,growth):
 	var tree = _Tree.new()
 	tree.tile = Vector2(x,y)
 	tree.growth = growth
-	tree.structure_manager = self
+	#tree.structure_manager = self
 	var image_index = tree.get_image_index()
 	structure_list[y*50+x] = tree
 	change_tile(x,y,image_index)
@@ -52,7 +52,6 @@ func add_structure_to_tilemap(x,y,reference):
 		reference.state = enums.building_states.operate
 		reference.health = reference.health_max
 		reference.update_pbar()
-		
 
 
 func change_tile(x,y,index):
@@ -61,7 +60,7 @@ func change_tile(x,y,index):
 
 func _on_tree_grow_timer_timeout():
 	self.emit_signal("grow")
-	
+
 
 func register_structure(x,y,ID):
 	print(str(x) + " ; " + str(y) + " : " + str(ID))
@@ -71,6 +70,7 @@ func register_structure(x,y,ID):
 func get_structure_ID(x,y):
 	var ID = structure_list[y*50+x]
 	return ID
+
 
 func remove_tree(x,y):
 	structure_list[y*50+x] = []

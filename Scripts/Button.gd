@@ -1,11 +1,13 @@
 extends CanvasLayer
 
 func _process(delta):
-	$Label.text = "FPS : " + str(ceil(1/delta))
+	#$Label.text = "FPS : " + str(ceil(1/delta))
+	pass
 
 var notif_dict = 	{
 					"missing_ress" : "Not enought wood, harvest more.",
 					"missing_food" : "Not enought food, build more farm.",
+					"missing_research" : "Not enought research point, hire more scientist",
 					"building_attack" : "One of your building is under attack!",
 					"building_destroyed" : "One of your building has been destroyed!",
 					"castle_attack" : "Your Castle is under attack!"
@@ -57,9 +59,10 @@ func show_notif(type):
 
 
 func _update():
-	$TextureRect/MarginContainer/HBoxContainer2/HBoxContainer/Wood_Label.text = str(world.wood)
-	$TextureRect/MarginContainer/HBoxContainer2/HBoxContainer2/Food_Label.text = str(worker_manager.workers_list.size()) + "/" + str(world.food) 
-	$TextureRect/MarginContainer/HBoxContainer2/HBoxContainer3/Research_Label.text = str(world.research)
+	
+	$MarginContainer/HBoxContainer2/HBoxContainer/Wood_Label.text =  str(world.wood)
+	$MarginContainer/HBoxContainer2/HBoxContainer2/Food_Label.text = str(worker_manager.workers_list.size()) + "/" + str(world.food) 
+	$MarginContainer/HBoxContainer2/HBoxContainer3/Research_Label.text = str(world.research)
 
 func _on_pop_up_timer_timeout():
 	$CenterContainer/pop_up_notif.visible = false

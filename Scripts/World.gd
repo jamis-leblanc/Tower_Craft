@@ -29,3 +29,7 @@ func add_food(amount):
 func add_research(amount):
 	research += amount
 	self.emit_signal("UI_Update")
+
+func remove_research(amount):
+	research -= amount
+	self.emit_signal("UI_Update")

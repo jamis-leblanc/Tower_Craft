@@ -9,7 +9,6 @@ func start_job():
 
 
 func quit_job():
-	free_map_char_cell()
 	print("quit builder")
 
 
@@ -18,13 +17,14 @@ func _update(delta):
 		
 		enums.task.seek_target:
 			if build_task != [] :
-				free_map_char_cell()
 				reset_target()
 				find_home_cell(build_task[1])
 				if target_cell == null:
-					current_task = enums.task.go_home
+					current_task = enums.task.seek_home
 				else :
 					current_task = enums.task.go_target
+					free_map_char_cell(mytile)
+					lock_map_char_cell(target_cell)
 		
 		
 		enums.task.go_target:
@@ -52,6 +52,8 @@ func _update(delta):
 				current_task = enums.task.idle
 			else :
 				current_task = enums.task.go_home
+				free_map_char_cell(mytile)
+				lock_map_char_cell(target_cell)
 
 		enums.task.go_home:
 			if path.size() == 0 :
@@ -62,6 +64,10 @@ func _update(delta):
 
 
 		enums.task.idle:
+			if p.carried_ressource != 0 :
+				p.get_node("AnimationPlayer").play("Idle_Log_"+ p.direction)
+			else :
+				p.get_node("AnimationPlayer").play("Idle_"+ p.direction)
 			if p.ready_to_seek == true  :
 				if p.at_home == true :
 					current_task = enums.task.seek_target
