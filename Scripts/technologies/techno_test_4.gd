@@ -6,7 +6,7 @@ func _init():
 	tooltip = "Increase the speed a\ntree is harvested"
 	techno_ref = enums.techno.harvest_speed
 	parent_techno_ref = null
-	cost = 0
+	cost = 100
 
 
 func update_stat():

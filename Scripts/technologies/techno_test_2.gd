@@ -4,7 +4,7 @@ extends "res://Scripts/technologies/technology.gd"
 func _init():
 	_name = "Capacity\nincreased"
 	tooltip = "Increase the amount of ressource a worker\nis able to harvest before returning"
-	cost = 0
+	cost = 100
 	techno_ref = enums.techno.worker_max_load
 	parent_techno_ref = enums.techno.harvest_amount
 

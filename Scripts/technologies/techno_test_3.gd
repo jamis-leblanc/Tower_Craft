@@ -4,7 +4,7 @@ extends "res://Scripts/technologies/technology.gd"
 func _init():
 	_name = "Increased\nspeed"
 	tooltip = "Increase the worker speed."
-	cost = 0
+	cost = 150
 	techno_ref = enums.techno.worker_speed
 	parent_techno_ref = enums.techno.harvest_amount
 

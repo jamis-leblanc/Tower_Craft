@@ -5,7 +5,7 @@ var nbr_scientist = 0
 func _init():
 	reference = "res://Scenes/laboratory.tscn"
 	size = 3
-	cost = 0
+	cost = 250
 	tile_index = 17
 	building_time = 5
 	UI_offset = Vector2(64,-64)
