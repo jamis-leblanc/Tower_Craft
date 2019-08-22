@@ -1,13 +1,11 @@
 extends "res://Scripts/StateMachine.gd"
 
 func start_job():
-	reset_target()
 	print("start jobless")
 	current_task = enums.task.seek_home
 
 
 func quit_job():
-	free_map_char_cell()
 	print("quit jobless")
 
 
@@ -21,6 +19,8 @@ func _update(delta):
 				current_task = enums.task.idle
 			else :
 				current_task = enums.task.go_home
+				free_map_char_cell(mytile)
+				lock_map_char_cell(target_cell)
 
 		enums.task.go_home:
 			if path.size() == 0 :
@@ -40,3 +40,9 @@ func _update(delta):
 				current_task = enums.task.idle
 			else :
 				unload(1)
+		
+		enums.task.idle:
+			if p.carried_ressource != 0 :
+				p.get_node("AnimationPlayer").play("Idle_Log_"+ p.direction)
+			else :
+				p.get_node("AnimationPlayer").play("Idle_"+ p.direction)

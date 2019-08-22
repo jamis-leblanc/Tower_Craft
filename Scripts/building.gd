@@ -2,6 +2,8 @@ extends Node2D
 
 var state = enums.building_states.prebuild
 var is_working = true
+var cost = 0
+var food = 0
 var size = 2
 var tile_index = 8
 var building_tile_index = 14
@@ -21,6 +23,7 @@ var health_max = 100
 var reference = "res://Scenes/forester.tscn"
 
 onready var map = get_parent().get_node("nav/map_structure")
+onready var world = get_tree().get_root().get_node("World")
 
 signal add_structure_to_tilemap(x,y,reference)
 
@@ -68,7 +71,6 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 			UI_on = true
 			UI_instance = load(popup_UI).instance()
 			UI_instance.set_z_index(10)
-			print(UI_instance.z_index)
 			get_node("UI_anchor").add_child(UI_instance)
 			UI_instance.find_node("_name").text = _name
 		else :
@@ -86,10 +88,8 @@ func repair(amount):
 func build_complete() :
 	state = enums.building_states.operate
 	structure_manager.change_tile(tile.x-offset-1,tile.y-offset-1,tile_index)
-
-
-func _on_Timer_timeout():
-	pass
+	world.add_food(food)
+	get_tree().call_group("UI", "_update")
 
 
 func update_pbar():

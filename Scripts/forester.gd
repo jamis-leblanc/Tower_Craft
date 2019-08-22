@@ -4,13 +4,12 @@ var _Tree = load("res://Scripts/tree.gd")
 var on_cooldown = false
 var max_range = 8
 
-#onready var structure_manager = get_parent().get_node("structure_manager")
-
 signal new_tree(x,y,growth)
 
 func _init():
 	reference = "res://Scenes/forester.tscn"
 	size = 2
+	cost = 200
 	tile_index = 8
 	offset = fmod(size,2)
 	_name = "Forester Hut"
@@ -19,21 +18,11 @@ func _init():
 func _ready():
 	self.connect("new_tree",structure_manager,"new_tree")
 
+
 func _process(delta):
 	if state == enums.building_states.operate:
 		update_production()
 
-
-func check_position_validity():
-	is_valid = true
-	for j in size :
-			for i in size :
-				var cell_type = map.get_cell(tile.x-(size/2+offset)+i,tile.y-(size/2+offset)+j)
-				if cell_type != 5 :
-					is_valid = false
-	if is_valid == false :	$Sprite.set_self_modulate(Color(1,0.25,0.25,1))
-	else  : 				$Sprite.set_self_modulate(Color(1,1,1,1))
-	
 
 func update_production():
 	if is_working == false : return

@@ -1,13 +1,11 @@
 extends "res://Scripts/StateMachine.gd"
 
 func start_job():
-	reset_target()
 	print("start woodcutter")
 	current_task = enums.task.seek_target
 
 
 func quit_job():
-	free_map_char_cell()
 	print("quit woodcutter")
 
 
@@ -23,6 +21,8 @@ func _update(delta):
 				current_task = enums.task.seek_home
 			else :
 				current_task = enums.task.go_target
+				free_map_char_cell(mytile)
+				lock_map_char_cell(target_cell)
 
 		enums.task.go_target:
 			if path.size() == 0 :
@@ -45,6 +45,8 @@ func _update(delta):
 				current_task = enums.task.idle
 			else :
 				current_task = enums.task.go_home
+				free_map_char_cell(mytile)
+				lock_map_char_cell(target_cell)
 
 		enums.task.go_home:
 			if path.size() == 0 :
@@ -66,6 +68,10 @@ func _update(delta):
 				unload(1)
 
 		enums.task.idle:
+			if p.carried_ressource != 0 :
+				p.get_node("AnimationPlayer").play("Idle_Log_"+ p.direction)
+			else :
+				p.get_node("AnimationPlayer").play("Idle_"+ p.direction)
 			if p.ready_to_seek == true  :
 				if p.at_home == true :
 					current_task = enums.task.seek_target

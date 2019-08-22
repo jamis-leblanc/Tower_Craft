@@ -4,6 +4,8 @@ var target_cell = null
 var target_structure_cell = null
 var target_structure_ref = null
 
+var in_building = false
+
 var anim_update = true
 
 var path = []
@@ -21,6 +23,7 @@ var current_task = enums.task.idle
 
 func _process(delta):
 	p.get_node("Label").text = str(current_task)
+	mytile = map.world_to_map(p.position)
 
 
 func find_target(type) :
@@ -42,8 +45,8 @@ func find_target(type) :
 		target_structure_cell = get_target_structure(target_cell,type)
 		target_structure_ref = structure_manager.get_structure_ID(target_structure_cell[0],target_structure_cell[1])
 		path = nav.get_simple_path(p.global_position,(map.map_to_world(Vector2(target_cell[0],target_cell[1])))+Vector2(16,17),false)
-		map_char.set_cell(mytile.x,mytile.y,0)
-		map_char.set_cell(target_cell[0],target_cell[1],1)
+		#map_char.set_cell(mytile.x,mytile.y,0)
+		#map_char.set_cell(target_cell[0],target_cell[1],1)
 	return goal_cell
 
 
@@ -62,8 +65,8 @@ func find_home_cell(home_building):
 		target_structure_cell = map.world_to_map(home_building.global_position)
 		target_structure_ref = home_building
 		path = nav.get_simple_path(p.global_position,(map.map_to_world(Vector2(target_cell[0],target_cell[1])))+Vector2(16,17),false)
-		map_char.set_cell(mytile.x,mytile.y,0)
-		map_char.set_cell(target_cell[0],target_cell[1],1)
+		#map_char.set_cell(mytile.x,mytile.y,0)
+		#map_char.set_cell(target_cell[0],target_cell[1],1)
 
 
 func get_home_cell_list(home):
@@ -134,8 +137,8 @@ func move_to_target(anim_prefix,delta) :
 		if d > 2:
 			p.position = p.position.linear_interpolate(path[0],(p.speed * delta)/d)
 			if anim_update == true:
-				mytile = map.world_to_map(p.position)
-				anim = anim_prefix + str(get_new_direction(p.global_position,path[0]))
+				p.direction = str(get_new_direction(p.global_position,path[0]))
+				anim = anim_prefix + p.direction
 				p.get_node("AnimationPlayer").play(anim)
 				anim_update = false
 		else :
@@ -157,10 +160,17 @@ func get_new_direction(start,end) :
 	if dir > -65 and dir <-25 : return("Up_Right")
 
 
+func research(my_target):
+	if p.research_ready == true : 
+		get_tree().get_root().get_node("World").add_research(1)
+		p.research_ready = false
+
+
 func harvest(my_target):
 	if is_instance_valid(my_target) :
 		if p.strike_ready == true :
-			var anim = "Strike_" + str(get_new_direction(p.global_position,Vector2(target_structure_cell[0]*32+16,target_structure_cell[1]*32+16)))
+			p.direction = str(get_new_direction(p.global_position,Vector2(target_structure_cell[0]*32+16,target_structure_cell[1]*32+16)))
+			var anim = "Strike_" + p.direction
 			p.get_node("AnimationPlayer").play(anim)
 			damage(my_target,p.damage)
 			p.strike_ready = false
@@ -174,7 +184,8 @@ func harvest(my_target):
 func build(my_target):
 	if is_instance_valid(my_target) :
 		if p.strike_ready == true :
-			var anim = "Strike_" + str(get_new_direction(p.global_position,Vector2(target_structure_cell[0]*32+16,target_structure_cell[1]*32+16)))
+			p.direction =  str(get_new_direction(p.global_position,Vector2(target_structure_cell[0]*32+16,target_structure_cell[1]*32+16)))
+			var anim = "Strike_" + p.direction
 			p.get_node("AnimationPlayer").play(anim)
 			repair(my_target,p.repair_amount)
 			p.strike_ready = false
@@ -188,7 +199,7 @@ func build(my_target):
 func damage(target,amount):
 	
 	amount = min(p.damage, p.carried_max-p.carried_ressource)
-	var incoming_ressource = target.damage(amount)
+	var incoming_ressource = target.damage(amount) + p.ressource_bonus
 	p.carried_ressource += incoming_ressource
 
 	if incoming_ressource < amount :
@@ -202,7 +213,8 @@ func repair(target,amount):
 
 
 func unload(amount):
-	var anim = "Log_Idle_" + str(get_new_direction(p.global_position,Vector2(target_structure_cell[0]*32+16,target_structure_cell[1]*32+16)))
+	p.direction =  str(get_new_direction(p.global_position,Vector2(target_structure_cell[0]*32-16,target_structure_cell[1]*32-16)))
+	var anim = "Idle_Log_" + p.direction
 	p.get_node("AnimationPlayer").play(anim)
 	p.carried_ressource -= 1
 	get_tree().get_root().get_node("World").add_wood(1)
@@ -215,8 +227,11 @@ func reset_target():
 	path = []
 
 
-func free_map_char_cell():
-	if target_cell != null :
-		map_char.set_cell(target_cell[0],target_cell[1],0)
-		map_char.set_cell(mytile[0],mytile[1],0)
-		print("free : " + str(target_cell))
+func free_map_char_cell(cell):
+	map_char.set_cell(cell[0],cell[1],0)
+	print("free : " + str(target_cell))
+
+
+func lock_map_char_cell(cell):
+	map_char.set_cell(cell[0],cell[1],1)
+	print("lock : " + str(target_cell))

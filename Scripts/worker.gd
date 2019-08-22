@@ -21,7 +21,7 @@ var path = []
 var offset = 0.5
 var anim_prefix = ""
 
-var speed = 100
+var speed = units_stats.worker_speed
 var anim_update = true
 var strike_ready = true
 var damage = 5
@@ -39,8 +39,6 @@ onready var structure_manager = get_parent().get_node("structure_manager")
 
 
 func _process(delta):
-	#print(enum_to_str(task, current_task))
-	
 	$Label2.text = str(carried_ressource)
 	$Label3.text = str(home_building)
 	match current_task:

@@ -1,0 +1,125 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scripts/Popup_science_building.gd" type="Script" id=1]
+[ext_resource path="res://panel_style2.tres" type="StyleBox" id=2]
+[ext_resource path="res://panel_style.tres" type="StyleBox" id=3]
+[ext_resource path="res://small_font_16.tres" type="DynamicFont" id=4]
+[ext_resource path="res://GFX/minus_button.png" type="Texture" id=5]
+[ext_resource path="res://GFX/plus_button.png" type="Texture" id=6]
+[ext_resource path="res://GFX/close_button.png" type="Texture" id=7]
+[ext_resource path="res://GFX/arrow_button.png" type="Texture" id=8]
+[ext_resource path="res://GFX/arrow_left_button.png" type="Texture" id=9]
+
+[node name="Popup_science_building" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 106.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 96, 64 )
+custom_styles/panel = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 9.0
+margin_top = 5.0
+margin_right = 97.0
+margin_bottom = 64.0
+rect_min_size = Vector2( 80, 50 )
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+editor/display_folded = true
+margin_right = 88.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_styles/panel = ExtResource( 3 )
+
+[node name="_name" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer"]
+margin_left = 9.0
+margin_top = 5.0
+margin_right = 79.0
+margin_bottom = 9.0
+custom_fonts/font = ExtResource( 4 )
+text = "Building name"
+align = 1
+autowrap = true
+
+[node name="nbr_workers" type="Label" parent="PanelContainer/VBoxContainer"]
+margin_top = 22.0
+margin_right = 88.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 0, 8 )
+custom_fonts/font = ExtResource( 4 )
+text = "Free Scientist : 0"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+editor/display_folded = true
+margin_top = 34.0
+margin_right = 88.0
+margin_bottom = 50.0
+
+[node name="Label3" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_top = 4.0
+margin_right = 32.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 8 )
+custom_fonts/font = ExtResource( 4 )
+text = "Scientist"
+
+[node name="Remove_scientist_button" type="TextureButton" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 36.0
+margin_right = 52.0
+margin_bottom = 16.0
+texture_normal = ExtResource( 5 )
+
+[node name="nbr_scientist" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 56.0
+margin_top = 4.0
+margin_right = 68.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 8 )
+custom_fonts/font = ExtResource( 4 )
+text = "0/4"
+
+[node name="Add_scientist_button" type="TextureButton" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 72.0
+margin_right = 88.0
+margin_bottom = 16.0
+texture_normal = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+visible = false
+margin_top = 54.0
+margin_right = 88.0
+margin_bottom = 58.0
+custom_fonts/font = ExtResource( 4 )
+text = "Scientists"
+align = 1
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -6.37038
+margin_top = -6.0
+margin_right = 9.62962
+margin_bottom = 10.0
+texture_normal = ExtResource( 7 )
+
+[node name="TextureButton2" type="TextureButton" parent="."]
+margin_left = 97.4815
+margin_top = 24.5926
+margin_right = 113.481
+margin_bottom = 40.5926
+toggle_mode = true
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+
+[node name="UI_anchor" type="Position2D" parent="."]
+position = Vector2( 105.778, 33.1852 )
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/Remove_scientist_button" to="." method="_on_Remove_scientist_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/Add_scientist_button" to="." method="_on_Add_scientist_button_pressed"]
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]
+[connection signal="toggled" from="TextureButton2" to="." method="_on_TextureButton2_toggled"]

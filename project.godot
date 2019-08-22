@@ -22,9 +22,11 @@ config/icon="res://icon.png"
 [autoload]
 
 worker_manager="*res://Scripts/worker_manager.gd"
-structure_manager="*res://Scripts/structure_manager.gd"
 enums="*res://Scripts/enums.gd"
 task_manager="*res://Scripts/task_manager.gd"
+techno_manager="*res://Scripts/techno_manager.gd"
+units_stats="*res://Scripts/units_stats.gd"
+structure_manager="*res://Scenes/structure_manager.tscn"
 
 [display]
 
@@ -50,6 +52,8 @@ mouse_middle_clic={
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
+quality/driver/fallback_to_gles2=true
 quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"
 quality/dynamic_fonts/use_oversampling=false

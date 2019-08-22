@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://panel_style.tres" type="StyleBox" id=1]
+[ext_resource path="res://Scripts/technologies/techno_tree.gd" type="Script" id=2]
+[ext_resource path="res://small_font_16.tres" type="DynamicFont" id=3]
+
+[node name="techno_tree" type="PanelContainer"]
+margin_right = 118.0
+margin_bottom = 136.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 9.0
+margin_top = 5.0
+margin_right = 109.0
+margin_bottom = 127.0
+
+[node name="name" type="Label" parent="VBoxContainer"]
+margin_right = 100.0
+margin_bottom = 4.0
+custom_fonts/font = ExtResource( 3 )
+text = "Techno tree name"
+align = 1
+autowrap = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 8.0
+margin_right = 100.0
+margin_bottom = 122.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 101, 148 )
+width = 2.0
+default_color = Color( 1, 1, 1, 1 )
+texture_mode = -1299206033
