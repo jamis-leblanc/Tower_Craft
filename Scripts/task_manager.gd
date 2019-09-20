@@ -7,6 +7,7 @@ var task_list = []
 func _process(delta):
 	match_task_builder()
 
+
 func add_builder(builder):
 	builder_list.append([builder,null])
 
@@ -53,6 +54,21 @@ func match_task_builder():
 func task_complete(task):
 	release_builder(task)
 	remove_task(task)
+
+
+func delete_incomplete_task(structure):
+	var incomplete_task_index = find_2D(task_list,structure,1)
+	if incomplete_task_index != -1 :
+		var incomplete_task = task_list[incomplete_task_index]
+		release_builder(incomplete_task)
+		remove_task(incomplete_task)
+
+
+func find_2D(list,value,pos):
+	for i in range(list.size()) :
+		if list[i][pos] == value :
+			return i
+	return -1
 
 
 func affect_task(task,builder) :

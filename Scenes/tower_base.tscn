@@ -1,0 +1,65 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scenes/building.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/tower_base.gd" type="Script" id=2]
+[ext_resource path="res://GFX/TileSet_Structures.png" type="Texture" id=3]
+[ext_resource path="res://GFX/fonts/m3x6.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 16 )
+
+[sub_resource type="DynamicFont" id=2]
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_top = -5
+extra_spacing_bottom = -4
+font_data = ExtResource( 4 )
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 37.054
+
+[node name="tower_base" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 3 )
+vframes = 6
+hframes = 12
+frame = 34
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+visible = false
+shape = SubResource( 1 )
+
+[node name="UI_anchor" parent="." index="2"]
+position = Vector2( 48, -16 )
+
+[node name="ProgressBar" parent="." index="3"]
+margin_left = -16.0
+margin_top = -23.0
+margin_right = 16.0
+margin_bottom = -18.0
+custom_fonts/font = SubResource( 2 )
+
+[node name="Label" parent="." index="4"]
+margin_top = -48.0
+margin_bottom = -34.0
+
+[node name="detection_area" type="Area2D" parent="." index="5"]
+collision_layer = 32
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area" index="0"]
+shape = SubResource( 3 )
+
+[node name="Label2" type="Label" parent="." index="6"]
+visible = false
+margin_left = -20.0
+margin_top = 16.0
+margin_right = 20.0
+margin_bottom = 30.0
+text = "area"
+
+[node name="attack_cooldown" type="Timer" parent="." index="7"]
+wait_time = 0.5
+autostart = true
+[connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]

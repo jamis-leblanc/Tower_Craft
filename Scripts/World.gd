@@ -3,10 +3,10 @@ extends Node2D
 signal UI_Update()
 
 var cell_size = Vector2(32,32)
-var wood = 0
+var wood = 500
 var food = 0
 var research = 0
-var map_size = Vector2(40 * cell_size.x,40 * cell_size.y) 
+var map_size = Vector2(64 * cell_size.x,64 * cell_size.y) 
 
 onready var nav = get_node("nav")
 onready var map = get_node("nav/map_structure")

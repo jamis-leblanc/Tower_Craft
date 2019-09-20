@@ -2,6 +2,8 @@ extends Node
 
 
 var workers_list = []
+var worker_creation_time = 5
+var worker_spawning = false
 var core = null
 
 onready var map = get_parent().get_node("World/nav/map_structure")
@@ -15,18 +17,32 @@ signal remove_worker()
 func create_new_worker(structure_ID):
 	if workers_list.size() ==  0 :
 		core = structure_ID
-	if workers_list.size() < world.food :
-		var spawn_tile = free_tile(structure_ID)
-		var instance = load("res://Scenes/worker.tscn").instance()
-		instance.global_position = map.map_to_world(spawn_tile) + Vector2(16,16)
-		get_parent().get_node("World").add_child(instance)
-		map_char.set_cell(spawn_tile.x,spawn_tile.y,1)
-		instance.mytile = spawn_tile
-		instance.home_building = structure_ID
-		workers_list.append([instance,enums.jobs.jobless,structure_ID])
-		get_tree().call_group("UI", "_update")
+	if workers_list.size() < world.food and worker_spawning == false:
+		spawn_worker(structure_ID)
+		worker_spawning = true
+		return true
+	elif worker_spawning == true:
+		get_tree().call_group("UI", "show_notif","worker_spawning_cooldown")
+		return false
 	else :
 		get_tree().call_group("UI", "show_notif","missing_food")
+		return false
+
+
+func spawn_worker(structure_ID):
+	$worker_creation_cooldown.wait_time = worker_creation_time
+	$worker_creation_cooldown.start()
+	yield(get_tree().create_timer(worker_creation_time), "timeout")
+	var spawn_tile = free_tile(structure_ID)
+	var instance = load("res://Scenes/worker.tscn").instance()
+	instance.global_position = map.map_to_world(spawn_tile) + Vector2(16,16)
+	get_parent().get_node("World").add_child(instance)
+	map_char.set_cell(spawn_tile.x,spawn_tile.y,1)
+	instance.mytile = spawn_tile
+	instance.home_building = structure_ID
+	workers_list.append([instance,enums.jobs.jobless,structure_ID])
+	get_tree().call_group("UI", "_update")
+	worker_spawning = false
 
 
 func count_jobs(job):
@@ -74,8 +90,17 @@ func remove_worker_from_struc(job,structure):
 			break
 	if worker_removed : emit_signal("remove_worker")
 	get_tree().call_group("UI", "_update")
+	return worker_removed
 
 
+func clear_struct(structure):
+	for i in workers_list :
+		if i[2] == structure:
+			i[2] = core
+			i[0].home_building = core
+			print("worker : " + str(i[0]) + " from structure : " + str(structure))
+	get_tree().call_group("UI", "_update")
+	
 
 func add_job(new_job):
 	for i in workers_list :
@@ -129,59 +154,3 @@ func free_tile(structure_ID):
 	if free_tile_found == true : 
 		return free_tile
 
-
-#func add_woodcutter_to_struc(structure):
-#	for i in workers_list :
-#		if i[1] == enums.jobs.woodcutter and i[2] == core:
-#			i[2] = structure
-#			i[0].home_building = structure
-#			break
-#	get_tree().call_group("UI", "_update")
-
-#
-#func remove_woodcutter_from_struc(structure):
-#	for i in workers_list :
-#		if i[1] == enums.jobs.woodcutter and i[2] == structure:
-#			i[2] = core
-#			i[0].home_building = core
-#			break
-#	get_tree().call_group("UI", "_update")
-	
-#func add_builder():
-#	for i in workers_list :
-#		if i[1] == enums.jobs.jobless:
-#			i[0].change_job(enums.jobs.builder)
-#			i[1] = enums.jobs.builder
-#			task_manager.add_builder(i[0])
-#			break
-#	get_tree().call_group("UI", "_update")
-#
-#
-#func remove_builder() :
-#	var builder_removed = task_manager.remove_builder()
-#	if builder_removed != null :
-#		for i in workers_list :
-#			if i[0] == builder_removed :
-#				i[0].change_job(enums.jobs.jobless)
-#				i[1] = enums.jobs.jobless
-#	get_tree().call_group("UI", "_update")
-
-#
-#func add_woodcutter():
-#	for i in workers_list :
-#		if i[1] == enums.jobs.jobless:
-#			i[0].change_job(enums.jobs.woodcutter)
-#			i[1] = enums.jobs.woodcutter
-#			break
-#	get_tree().call_group("UI", "_update")
-#
-#
-#func remove_woodcutter():
-#	for i in workers_list :
-#		if i[1] == enums.jobs.woodcutter:
-#			i[2] = core
-#			i[0].home_building = core
-#			i[0].change_job(enums.jobs.jobless)
-#			i[1] = enums.jobs.jobless
-#			break
-#	get_tree().call_group("UI", "_update")

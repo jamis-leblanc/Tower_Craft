@@ -9,7 +9,7 @@ signal grow()
 
 
 func _ready():
-	structure_list.resize(2500)
+	structure_list.resize(5000)
 	for i in map.get_used_cells_by_id(0):
 		new_tree(i.x,i.y,10)
 	for i in map.get_used_cells_by_id(9):
@@ -22,9 +22,8 @@ func new_tree(x,y,growth):
 	var tree = _Tree.new()
 	tree.tile = Vector2(x,y)
 	tree.growth = growth
-	#tree.structure_manager = self
 	var image_index = tree.get_image_index()
-	structure_list[y*50+x] = tree
+	structure_list[y*64+x] = tree
 	change_tile(x,y,image_index)
 	self.connect("grow",tree,"grow")
 	tree.connect("change_tile",self,"change_tile")
@@ -32,18 +31,21 @@ func new_tree(x,y,growth):
 
 func spawn_structure(x,y,reference):
 	var instance = load(str(reference)).instance()
-	get_parent().call_deferred("add_child",instance)
-	instance.global_position = Vector2((x+(instance.offset+1))*32,(y+(instance.offset+1))*32)
+	get_parent().get_node("World").call_deferred("add_child",instance)
+	instance.global_position = map.map_to_world(Vector2(x,y))-(instance.tile_offset*32 - instance.position_offset)
+	instance.tile = Vector2(x,y)
 	instance.state = enums.building_states.build
 	instance.get_node("Sprite").set_visible(false)
 	add_structure_to_tilemap(x,y,instance)
+	if reference == "res://Scenes/core.tscn":
+		worker_manager.core = instance
 
 
 func add_structure_to_tilemap(x,y,reference):
 	for j in reference.size :
 		for i in reference.size :
 			map.set_cell(x+i,y+j,11)
-	structure_list[y*50+x] = reference
+	structure_list[y*64+x] = reference
 	if reference.state != enums.building_states.build :
 		map.set_cell(x,y,reference.building_tile_index)
 		task_manager.new_task(enums.task_type.build,reference,reference.building_time)
@@ -53,6 +55,23 @@ func add_structure_to_tilemap(x,y,reference):
 		reference.health = reference.health_max
 		reference.update_pbar()
 
+
+func remove_structure_from_tilemap(structure):
+	var index = structure_list.find(structure)
+	if index != -1 :
+		var x = index % 64
+		var y = floor(index/64)
+		for j in structure.size :
+			for i in structure.size :
+				map.set_cell(x+i,y+j,5)
+
+
+func unregister_structure(structure):
+	var index = structure_list.find(structure)
+	if index != -1 :
+		var x = index % 64
+		var y = floor(index/64)
+		structure_list[y*64+x] = structure
 
 func change_tile(x,y,index):
 	map.set_cell(x,y,index)
@@ -64,17 +83,18 @@ func _on_tree_grow_timer_timeout():
 
 func register_structure(x,y,ID):
 	print(str(x) + " ; " + str(y) + " : " + str(ID))
-	structure_list[y*50+x] = ID
+	structure_list[y*64+x] = ID
 
 
 func get_structure_ID(x,y):
-	var ID = structure_list[y*50+x]
+	var ID = structure_list[y*64+x]
 	return ID
 
 
 func remove_tree(x,y):
-	structure_list[y*50+x] = []
+	structure_list[y*64+x] = []
 	change_tile(x,y,3)
+
 
 
 

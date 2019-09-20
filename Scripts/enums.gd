@@ -14,6 +14,19 @@ enum task {	idle,
 			operate,
 			}
 
+
+enum enemy_task {	idle,
+					seek_step,
+					move_to_step,
+					seek_tree,
+					hit_tree,
+					seek_final_target,
+					move_to_final_target,
+					hit_final_target,
+					death
+				}
+
+
 enum jobs { 	jobless,
 				woodcutter,
 				builder,
@@ -25,7 +38,8 @@ enum jobs { 	jobless,
 enum building_states {	prebuild,
 						spawn,
 						build,
-						operate
+						operate,
+						exploding
 					}
 
 enum task_type {	build,

@@ -1,11 +1,26 @@
 extends Node2D
 
 onready var parent = self.get_parent().get_parent()
+onready var worker_Pbar = $MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/CenterContainer/HBoxContainer/add_worker/ProgressBar
+onready var worker_cooldown_timer = worker_manager.get_node("worker_creation_cooldown")
 
 
 func _ready():
 	add_to_group("UI")
 	_update()
+
+
+func _process(delta):
+	if worker_manager.worker_spawning == true :
+		_update_progress_bar()
+
+
+func _update_progress_bar() :
+	if worker_Pbar.is_visible() == false:
+		worker_Pbar.set_visible(true)
+	worker_Pbar.value = ((worker_cooldown_timer.wait_time-worker_cooldown_timer.time_left) / worker_cooldown_timer.wait_time)*100
+	if worker_Pbar.value >= 99 :
+		worker_Pbar.set_visible(false)
 
 
 func _update():
@@ -21,6 +36,7 @@ func _on_TextureButton_pressed():
 
 func _on_add_worker_pressed():
 	worker_manager.create_new_worker(parent)
+
 
 
 func _on_Add_Woodcutter_button_pressed():

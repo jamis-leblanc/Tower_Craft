@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/troll_1.gd" type="Script" id=2]
+[ext_resource path="res://GFX/enemies/troll.png" type="Texture" id=3]
+
+[node name="enemy" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="1"]
+texture = ExtResource( 3 )
+frame = 45
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+visible = false
+
+[node name="CollisionShape2D" parent="detection_area" index="0"]
+visible = false

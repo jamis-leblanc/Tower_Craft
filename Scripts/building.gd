@@ -7,8 +7,11 @@ var food = 0
 var size = 2
 var tile_index = 8
 var building_tile_index = 14
-var offset = floor(size/2)
-var tile_offset = Vector2(-1,-1)
+var destroyed_tile_index = 18
+var mouse_offset = fmod(size+1,2) * Vector2(16,16)	# mouse_offset = 16,16 if size is en even number,  0,0 otherwise
+var position_offset = fmod(size,2) * Vector2(16,16)	# position_offset = 16,16 if size is en odd number,  0,0 otherwise
+var tile_offset = floor(size/2) * Vector2(-1,-1)	# tile_offset = (0,0) is size  = 1, (-1,-1) otherwise
+
 var UI_offset = Vector2(64,-32)
 var tile = null
 var is_valid = true
@@ -32,7 +35,7 @@ func _ready():
 
 
 func _process(delta):
-	$Label.text = str(state)
+	$Label.text = str(health)
 	if state == enums.building_states.spawn :
 		follow_cursor()
 	if state == enums.building_states.operate and $Sprite.visible == false :
@@ -40,13 +43,13 @@ func _process(delta):
 
 
 func follow_cursor():
-	var mouse_cell = get_global_mouse_position()/(get_parent().cell_size)
-	self.position.x = (floor(mouse_cell.x)+offset)*get_parent().cell_size.x
-	self.position.y = (floor(mouse_cell.y)+offset)*get_parent().cell_size.y
-	tile = map.world_to_map(Vector2(self.position.x,self.position.y))
+	
+	var mouse_cell = map.world_to_map(get_global_mouse_position() + mouse_offset)
+	tile = mouse_cell + tile_offset
+	self.global_position = map.map_to_world(mouse_cell) + position_offset
 	check_position_validity()
 	if Input.is_action_just_pressed("mouse_left_clic") and is_valid == true:
-		self.emit_signal("add_structure_to_tilemap",tile.x-offset-1,tile.y-offset-1,self)
+		self.emit_signal("add_structure_to_tilemap",tile.x,tile.y,self)
 		state = enums.building_states.build
 		$Sprite.set_visible(false)
 
@@ -55,11 +58,11 @@ func check_position_validity():
 	is_valid = true
 	for j in size :
 			for i in size :
-				var cell_type = map.get_cell(tile.x-(size/2+offset)+i,tile.y-(size/2+offset)+j)
-				if cell_type != 5 :
+				var cell_type = map.get_cell(tile.x+i,tile.y+j)
+				if cell_type != 5 and cell_type != 3:
 					is_valid = false
-	if is_valid == false :	$Sprite.set_self_modulate(Color(1,0.25,0.25,1))
-	else  : 				$Sprite.set_self_modulate(Color(1,1,1,1))
+	if is_valid == false :	$Sprite.set_self_modulate(Color(1,0.25,0.25,0.5))
+	else  : 				$Sprite.set_self_modulate(Color(1,1,1,0.5))
 
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
@@ -87,7 +90,7 @@ func repair(amount):
 
 func build_complete() :
 	state = enums.building_states.operate
-	structure_manager.change_tile(tile.x-offset-1,tile.y-offset-1,tile_index)
+	structure_manager.change_tile(tile.x,tile.y,tile_index)
 	world.add_food(food)
 	get_tree().call_group("UI", "_update")
 
@@ -95,3 +98,32 @@ func build_complete() :
 func update_pbar():
 	$ProgressBar.value = health
 	
+
+func damage(amount):
+	if state != enums.building_states.exploding :
+		health -= amount/20
+		update_pbar()
+		if health <= 0 :
+			destroy()
+			state = enums.building_states.exploding
+			$Sprite.set_visible(false)
+
+
+func destroy():
+	worker_manager.clear_struct(self)
+	structure_manager.remove_structure_from_tilemap(self)
+	structure_manager.unregister_structure(self)
+	structure_manager.change_tile(tile.x,tile.y,destroyed_tile_index)
+	var instance = load("res://Scenes/simple_spawner.tscn").instance()
+	add_child(instance)
+	instance.connect("delete",self,"delete")
+	task_manager.delete_incomplete_task(self)
+
+
+func delete():
+	if name == "core" :
+		print("Game Over")
+		get_tree().change_scene("res://Scenes/game_over.tscn")
+	else :
+		structure_manager.change_tile(tile.x,tile.y,5)
+		queue_free()

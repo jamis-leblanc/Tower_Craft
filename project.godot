@@ -21,12 +21,12 @@ config/icon="res://icon.png"
 
 [autoload]
 
-worker_manager="*res://Scripts/worker_manager.gd"
 enums="*res://Scripts/enums.gd"
 task_manager="*res://Scripts/task_manager.gd"
 techno_manager="*res://Scripts/techno_manager.gd"
 units_stats="*res://Scripts/units_stats.gd"
 structure_manager="*res://Scenes/structure_manager.tscn"
+worker_manager="*res://Scenes/worker_manager.tscn"
 
 [display]
 
@@ -50,9 +50,20 @@ mouse_middle_clic={
  ]
 }
 
+[layer_names]
+
+2d_render/layer_1="structure"
+2d_physics/layer_1="structure"
+2d_render/layer_2="enemy"
+2d_physics/layer_2="enemy"
+2d_render/layer_3="projectile"
+2d_physics/layer_3="projectile"
+2d_render/layer_4="enemy_projectile"
+2d_physics/layer_4="enemy_projectile"
+2d_render/structures=false
+
 [rendering]
 
-quality/driver/driver_name="GLES2"
 quality/driver/fallback_to_gles2=true
 quality/2d/use_pixel_snap=true
 environment/default_environment="res://default_env.tres"

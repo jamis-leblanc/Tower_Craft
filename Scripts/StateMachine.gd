@@ -65,8 +65,6 @@ func find_home_cell(home_building):
 		target_structure_cell = map.world_to_map(home_building.global_position)
 		target_structure_ref = home_building
 		path = nav.get_simple_path(p.global_position,(map.map_to_world(Vector2(target_cell[0],target_cell[1])))+Vector2(16,17),false)
-		#map_char.set_cell(mytile.x,mytile.y,0)
-		#map_char.set_cell(target_cell[0],target_cell[1],1)
 
 
 func get_home_cell_list(home):
@@ -208,8 +206,8 @@ func damage(target,amount):
 
 func repair(target,amount):
 	var incoming_ressource = target.repair(amount)
-	if incoming_ressource < amount :
-		print("Build complete!")
+	#if incoming_ressource < amount :
+		#print("Build complete!")
 
 
 func unload(amount):
@@ -229,9 +227,9 @@ func reset_target():
 
 func free_map_char_cell(cell):
 	map_char.set_cell(cell[0],cell[1],0)
-	print("free : " + str(target_cell))
+	#print("free : " + str(target_cell))
 
 
 func lock_map_char_cell(cell):
 	map_char.set_cell(cell[0],cell[1],1)
-	print("lock : " + str(target_cell))
+	#print("lock : " + str(target_cell))

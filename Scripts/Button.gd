@@ -10,7 +10,8 @@ var notif_dict = 	{
 					"missing_research" : "Not enought research point, hire more scientist",
 					"building_attack" : "One of your building is under attack!",
 					"building_destroyed" : "One of your building has been destroyed!",
-					"castle_attack" : "Your Castle is under attack!"
+					"castle_attack" : "Your Castle is under attack!",
+					"worker_spawning_cooldown" : "A new worker is already being build"
 					}
 
 
@@ -19,6 +20,13 @@ onready var world = get_tree().get_root().get_node("World")
 
 func _ready():
 	add_to_group("UI")
+
+
+func _update():
+	
+	$MarginContainer/HBoxContainer2/HBoxContainer/Wood_Label.text =  str(world.wood)
+	$MarginContainer/HBoxContainer2/HBoxContainer2/Food_Label.text = str(worker_manager.workers_list.size()) + "/" + str(world.food) 
+	$MarginContainer/HBoxContainer2/HBoxContainer3/Research_Label.text = str(world.research)
 
 
 func _on_Button_pressed():
@@ -40,6 +48,10 @@ func _on_Button4_pressed():
 func _on_Button5_pressed():
 	spawn("res://Scenes/laboratory.tscn")
 	
+
+func _on_Button6_pressed():
+	spawn("res://Scenes/tower_base.tscn")
+	
 	
 func spawn(type) :
 	var instance = load(type).instance()
@@ -58,13 +70,8 @@ func show_notif(type):
 	$CenterContainer/pop_up_notif.visible = true
 
 
-func _update():
-	
-	$MarginContainer/HBoxContainer2/HBoxContainer/Wood_Label.text =  str(world.wood)
-	$MarginContainer/HBoxContainer2/HBoxContainer2/Food_Label.text = str(worker_manager.workers_list.size()) + "/" + str(world.food) 
-	$MarginContainer/HBoxContainer2/HBoxContainer3/Research_Label.text = str(world.research)
-
 func _on_pop_up_timer_timeout():
 	$CenterContainer/pop_up_notif.visible = false
+
 
 
