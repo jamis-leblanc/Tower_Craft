@@ -5,7 +5,7 @@ func _init():
 	reference = "res://Scenes/farm.tscn"
 	food = 4
 	size = 2
-	cost = 100
+	cost = 200
 	tile_index = 16
 	mouse_offset = fmod(size+1,2) * Vector2(16,16)	# mouse_offset = 16,16 if size is en even number,  0,0 otherwise
 	position_offset = fmod(size,2) * Vector2(16,16)	# position_offset = 16,16 if size is en odd number,  0,0 otherwise

@@ -14,7 +14,4 @@ func _init():
 	tile_offset = floor(size/2) * Vector2(-1,-1)	# tile_offset = (0,0) is size  = 1, (-1,-1) otherwise
 	_name = "Laboratory"
 	popup_UI = "res://Scenes/Popup_science_building.tscn"
-
-#
-#func _on_prod_timer_timeout():
-#	world.add_research(nbr_scientist)
+	max_user = 8

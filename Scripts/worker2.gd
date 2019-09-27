@@ -4,7 +4,8 @@ extends Node2D
 onready var jobs  = {	0 : "Jobs/Jobless",
 						1 : "Jobs/Woodcutter",
 						2 : "Jobs/Builder",
-						3 : "Jobs/Scientist"
+						3 : "Jobs/Scientist",
+						4 : "Jobs/Mage"
 						}
 
 

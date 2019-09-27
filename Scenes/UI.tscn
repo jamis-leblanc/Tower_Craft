@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/Button.gd" type="Script" id=1]
 [ext_resource path="res://panel_style.tres" type="StyleBox" id=2]
@@ -7,6 +7,11 @@
 [ext_resource path="res://GFX/spacer.png" type="Texture" id=5]
 [ext_resource path="res://GFX/food_icon.png" type="Texture" id=6]
 [ext_resource path="res://GFX/research_icon.png" type="Texture" id=7]
+[ext_resource path="res://GFX/mana_icon.png" type="Texture" id=8]
+[ext_resource path="res://GFX/repair_button_up.png" type="Texture" id=9]
+[ext_resource path="res://GFX/repair_button_down.png" type="Texture" id=10]
+[ext_resource path="res://GFX/destroy_button_up.png" type="Texture" id=11]
+[ext_resource path="res://GFX/destroy_button_down.png" type="Texture" id=12]
 
 [node name="UI" type="CanvasLayer"]
 scale = Vector2( 2, 2 )
@@ -48,6 +53,20 @@ margin_right = 108.0
 margin_bottom = 130.0
 text = "Base tower"
 
+[node name="Button7" type="Button" parent="."]
+margin_left = 15.5
+margin_top = 133.5
+margin_right = 107.5
+margin_bottom = 153.5
+text = "Altar"
+
+[node name="Button8" type="Button" parent="."]
+margin_left = 15.5
+margin_top = 158.0
+margin_right = 107.5
+margin_bottom = 178.0
+text = "Wall"
+
 [node name="Label" type="Label" parent="."]
 margin_left = 728.0
 margin_top = 16.0
@@ -55,20 +74,22 @@ margin_right = 768.0
 margin_bottom = 30.0
 
 [node name="MarginContainer" type="PanelContainer" parent="."]
+editor/display_folded = true
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -470.0
-margin_right = -347.0
+margin_left = -488.0
+margin_right = -304.0
 margin_bottom = 30.0
 custom_styles/panel = ExtResource( 2 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer"]
 margin_left = 9.0
 margin_top = 5.0
-margin_right = 121.0
+margin_right = 175.0
 margin_bottom = 21.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer2"]
+editor/display_folded = true
 margin_right = 24.0
 margin_bottom = 16.0
 
@@ -99,6 +120,7 @@ margin_bottom = 16.0
 texture = ExtResource( 5 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer2"]
+editor/display_folded = true
 margin_left = 40.0
 margin_right = 72.0
 margin_bottom = 16.0
@@ -127,6 +149,7 @@ margin_bottom = 16.0
 texture = ExtResource( 5 )
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/HBoxContainer2"]
+editor/display_folded = true
 margin_left = 88.0
 margin_right = 112.0
 margin_bottom = 16.0
@@ -151,7 +174,39 @@ custom_fonts/font = ExtResource( 4 )
 text = "0"
 align = 1
 
+[node name="spacer3" type="TextureRect" parent="MarginContainer/HBoxContainer2"]
+margin_left = 116.0
+margin_right = 124.0
+margin_bottom = 16.0
+texture = ExtResource( 5 )
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/HBoxContainer2"]
+margin_left = 128.0
+margin_right = 152.0
+margin_bottom = 16.0
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer2/HBoxContainer4"]
+margin_right = 16.0
+margin_bottom = 16.0
+
+[node name="mana_Icon" type="TextureRect" parent="MarginContainer/HBoxContainer2/HBoxContainer4/CenterContainer"]
+margin_right = 16.0
+margin_bottom = 16.0
+texture = ExtResource( 8 )
+
+[node name="mana_Label" type="Label" parent="MarginContainer/HBoxContainer2/HBoxContainer4"]
+margin_left = 20.0
+margin_top = 6.0
+margin_right = 24.0
+margin_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = ExtResource( 4 )
+text = "0"
+align = 1
+
 [node name="CenterContainer" type="CenterContainer" parent="."]
+editor/display_folded = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = -800.0
@@ -172,9 +227,31 @@ valign = 1
 [node name="pop_up_timer" type="Timer" parent="CenterContainer"]
 wait_time = 4.0
 one_shot = true
+
+[node name="repair_button" type="TextureButton" parent="."]
+margin_left = 120.0
+margin_top = 8.0
+margin_right = 152.0
+margin_bottom = 40.0
+toggle_mode = true
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 10 )
+
+[node name="demolish_button" type="TextureButton" parent="."]
+margin_left = 160.0
+margin_top = 8.0
+margin_right = 192.0
+margin_bottom = 40.0
+toggle_mode = true
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 12 )
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Button3" to="." method="_on_Button3_pressed"]
 [connection signal="pressed" from="Button4" to="." method="_on_Button4_pressed"]
 [connection signal="pressed" from="Button5" to="." method="_on_Button5_pressed"]
 [connection signal="pressed" from="Button6" to="." method="_on_Button6_pressed"]
+[connection signal="pressed" from="Button7" to="." method="_on_Button7_pressed"]
+[connection signal="pressed" from="Button8" to="." method="_on_Button8_pressed"]
 [connection signal="timeout" from="CenterContainer/pop_up_timer" to="." method="_on_pop_up_timer_timeout"]
+[connection signal="toggled" from="repair_button" to="." method="_on_repair_button_toggled"]
+[connection signal="toggled" from="demolish_button" to="." method="_on_demolish_button_toggled"]

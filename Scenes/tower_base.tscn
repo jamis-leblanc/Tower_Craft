@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/building.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/tower_base.gd" type="Script" id=2]
-[ext_resource path="res://GFX/TileSet_Structures.png" type="Texture" id=3]
-[ext_resource path="res://GFX/fonts/m3x6.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://GFX/fonts/m3x6.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://GFX/projectiles.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 16, 16 )
@@ -12,22 +12,37 @@ extents = Vector2( 16, 16 )
 outline_color = Color( 0, 0, 0, 1 )
 extra_spacing_top = -5
 extra_spacing_bottom = -4
-font_data = ExtResource( 4 )
+font_data = ExtResource( 3 )
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 37.054
+
+[sub_resource type="Animation" id=4]
+resource_name = "tower_on"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 24, 25, 26, 27 ]
+}
 
 [node name="tower_base" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="Sprite" parent="." index="0"]
-texture = ExtResource( 3 )
-vframes = 6
+vframes = 12
 hframes = 12
 frame = 34
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
-visible = false
 shape = SubResource( 1 )
 
 [node name="UI_anchor" parent="." index="2"]
@@ -49,6 +64,7 @@ collision_layer = 32
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area" index="0"]
+visible = false
 shape = SubResource( 3 )
 
 [node name="Label2" type="Label" parent="." index="6"]
@@ -62,4 +78,19 @@ text = "area"
 [node name="attack_cooldown" type="Timer" parent="." index="7"]
 wait_time = 0.5
 autostart = true
+
+[node name="Sprite2" type="Sprite" parent="." index="8"]
+position = Vector2( 0, -10 )
+texture = ExtResource( 4 )
+vframes = 6
+hframes = 12
+frame = 24
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="9"]
+anims/tower_on = SubResource( 4 )
+
+[node name="use_mana" parent="." index="10"]
+wait_time = 12.0
+[connection signal="offline" from="." to="." method="_on_tower_base_offline"]
+[connection signal="online" from="." to="." method="_on_tower_base_online"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]

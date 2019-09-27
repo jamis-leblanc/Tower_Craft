@@ -60,9 +60,16 @@ func delete_incomplete_task(structure):
 	var incomplete_task_index = find_2D(task_list,structure,1)
 	if incomplete_task_index != -1 :
 		var incomplete_task = task_list[incomplete_task_index]
+		print("Delete incomplete task : " + str(incomplete_task))
 		release_builder(incomplete_task)
 		remove_task(incomplete_task)
 
+func task_on_building(structure):
+	var task_index = find_2D(task_list,structure,1)
+	if task_index == -1 :
+		return false
+	else :
+		return true
 
 func find_2D(list,value,pos):
 	for i in range(list.size()) :

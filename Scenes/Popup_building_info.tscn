@@ -23,7 +23,7 @@ rect_min_size = Vector2( 96, 96 )
 
 [node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
 margin_right = 104.0
-margin_bottom = 163.0
+margin_bottom = 166.0
 texture = ExtResource( 2 )
 patch_margin_left = 9
 patch_margin_top = 9
@@ -32,25 +32,25 @@ patch_margin_bottom = 9
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
 margin_right = 104.0
-margin_bottom = 163.0
+margin_bottom = 166.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer"]
-margin_top = 8.0
 margin_right = 104.0
-margin_bottom = 154.0
+margin_bottom = 166.0
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/CenterContainer/HBoxContainer"]
 margin_right = 1.0
-margin_bottom = 146.0
+margin_bottom = 166.0
 rect_min_size = Vector2( 1, 0 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer"]
 margin_left = 5.0
 margin_right = 99.0
-margin_bottom = 146.0
+margin_bottom = 166.0
 rect_min_size = Vector2( 80, 60 )
 
 [node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
+editor/display_folded = true
 margin_right = 94.0
 margin_bottom = 18.0
 size_flags_horizontal = 3
@@ -93,6 +93,7 @@ align = 1
 valign = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
+editor/display_folded = true
 margin_top = 46.0
 margin_right = 94.0
 margin_bottom = 62.0
@@ -127,6 +128,7 @@ margin_bottom = 16.0
 texture_normal = ExtResource( 6 )
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
+editor/display_folded = true
 margin_top = 66.0
 margin_right = 94.0
 margin_bottom = 82.0
@@ -168,6 +170,7 @@ margin_bottom = 16.0
 texture_normal = ExtResource( 6 )
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
+editor/display_folded = true
 margin_top = 86.0
 margin_right = 94.0
 margin_bottom = 102.0
@@ -208,10 +211,52 @@ margin_right = 54.0
 margin_bottom = 16.0
 texture_normal = ExtResource( 6 )
 
-[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
 margin_top = 106.0
 margin_right = 94.0
-margin_bottom = 138.0
+margin_bottom = 122.0
+
+[node name="Label3" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
+margin_top = 4.0
+margin_right = 22.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 8 )
+custom_fonts/font = ExtResource( 4 )
+text = "Mages"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
+margin_left = 26.0
+margin_right = 94.0
+margin_bottom = 16.0
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Remove_mage_button" type="TextureButton" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer4/HBoxContainer"]
+margin_left = 24.0
+margin_right = 40.0
+margin_bottom = 16.0
+texture_normal = ExtResource( 5 )
+
+[node name="nbr_mage" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer4/HBoxContainer"]
+margin_left = 44.0
+margin_top = 4.0
+margin_right = 48.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 0, 8 )
+custom_fonts/font = ExtResource( 4 )
+text = "0"
+
+[node name="Add_mage_button" type="TextureButton" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer4/HBoxContainer"]
+margin_left = 52.0
+margin_right = 68.0
+margin_bottom = 16.0
+texture_normal = ExtResource( 6 )
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
+editor/display_folded = true
+margin_top = 126.0
+margin_right = 94.0
+margin_bottom = 158.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -247,15 +292,15 @@ custom_styles/bg = ExtResource( 9 )
 percent_visible = false
 
 [node name="TextureRect2" type="TextureRect" parent="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer"]
-margin_top = 142.0
+margin_top = 162.0
 margin_right = 94.0
-margin_bottom = 146.0
+margin_bottom = 166.0
 rect_min_size = Vector2( 0, 4 )
 
 [node name="TextureRect2" type="TextureRect" parent="MarginContainer/CenterContainer/HBoxContainer"]
 margin_left = 103.0
 margin_right = 104.0
-margin_bottom = 146.0
+margin_bottom = 166.0
 rect_min_size = Vector2( 1, 0 )
 
 [node name="TextureButton" type="TextureButton" parent="."]
@@ -274,5 +319,7 @@ texture_normal = ExtResource( 10 )
 [connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer2/HBoxContainer/Add_builder_button" to="." method="_on_Add_builder_button_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer3/HBoxContainer/Remove_scientist_button" to="." method="_on_Remove_scientist_button_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer3/HBoxContainer/Add_scientist_button" to="." method="_on_Add_scientist_button_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer4/HBoxContainer/Remove_mage_button" to="." method="_on_Remove_mage_button_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/HBoxContainer4/HBoxContainer/Add_mage_button" to="." method="_on_Add_mage_button_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/VBoxContainer/CenterContainer/HBoxContainer/add_worker" to="." method="_on_add_worker_pressed"]
 [connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

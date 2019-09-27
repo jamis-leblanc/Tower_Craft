@@ -6,6 +6,7 @@ var cell_size = Vector2(32,32)
 var wood = 500
 var food = 0
 var research = 0
+var mana = 200
 var map_size = Vector2(64 * cell_size.x,64 * cell_size.y) 
 
 onready var nav = get_node("nav")
@@ -32,4 +33,13 @@ func add_research(amount):
 
 func remove_research(amount):
 	research -= amount
+	self.emit_signal("UI_Update")
+
+
+func add_mana(amount):
+	mana += amount
+	self.emit_signal("UI_Update")
+
+func remove_mana(amount):
+	mana -= amount
 	self.emit_signal("UI_Update")

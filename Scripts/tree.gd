@@ -8,13 +8,14 @@ enum tree_state {	small,
 				}
 
 var size = 1
-var health = 100
+var health = 25
 var growth_rate = 0.1
 var growth_state = tree_state.small
 
 var step_1 = 5
 var step_2 = 10
 var tile = Vector2()
+var _name = "Tree"
 #var structure_manager = null
 
 signal change_tile(x,y,index)

@@ -11,18 +11,18 @@ func _ready():
 
 func _update():
 	$PanelContainer/VBoxContainer/nbr_workers.text = "Free scientist : " + str(worker_manager.count_jobs_free(3))
-	var nbr_scientist = worker_manager.count_jobs_building(3,parent)
-	$PanelContainer/VBoxContainer/HBoxContainer/nbr_scientist.text = str(nbr_scientist)
-	parent.nbr_scientist = nbr_scientist
-	$PanelContainer/VBoxContainer/Label.text = str(nbr_scientist)
+	var nbr_scientist = parent.current_user
+	$PanelContainer/VBoxContainer/HBoxContainer/nbr_scientist.text =  str(nbr_scientist) + " / " + str(parent.max_user)
 
 
 func _on_Remove_scientist_button_pressed():
-	worker_manager.remove_worker_from_struc(enums.jobs.scientist,parent)
+	if parent.remove_user() == true and worker_manager.remove_worker_from_struc(enums.jobs.scientist,parent) == true :
+		parent.current_user -= 1
 
 
 func _on_Add_scientist_button_pressed():
-	worker_manager.add_worker_to_struct(enums.jobs.scientist,parent)
+	if parent.add_user() == true and worker_manager.add_worker_to_struct(enums.jobs.scientist,parent) == true:
+		parent.current_user += 1
 
 
 func _on_TextureButton_pressed():

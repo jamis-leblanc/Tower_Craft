@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scenes/building.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/laboratory.gd" type="Script" id=2]
-[ext_resource path="res://GFX/TileSet_Structures.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48, 48 )
@@ -11,8 +10,7 @@ extents = Vector2( 48, 48 )
 script = ExtResource( 2 )
 
 [node name="Sprite" parent="." index="0"]
-texture = ExtResource( 3 )
-vframes = 2
+vframes = 4
 hframes = 4
 frame = 6
 
@@ -31,8 +29,3 @@ margin_left = 0.0
 margin_top = -48.0
 margin_right = 40.0
 margin_bottom = -34.0
-
-[node name="prod_timer" type="Timer" parent="." index="5"]
-wait_time = 5.0
-autostart = true
-[connection signal="timeout" from="prod_timer" to="." method="_on_prod_timer_timeout"]

@@ -2,6 +2,7 @@ extends Node
 
 var _Tree = load("res://Scripts/tree.gd")
 var  structure_list = []
+var building_list = []
 
 onready var map = get_parent().get_node("World/nav/map_structure")
 
@@ -46,6 +47,7 @@ func add_structure_to_tilemap(x,y,reference):
 		for i in reference.size :
 			map.set_cell(x+i,y+j,11)
 	structure_list[y*64+x] = reference
+	building_list.append(reference)
 	if reference.state != enums.building_states.build :
 		map.set_cell(x,y,reference.building_tile_index)
 		task_manager.new_task(enums.task_type.build,reference,reference.building_time)
@@ -53,6 +55,7 @@ func add_structure_to_tilemap(x,y,reference):
 		map.set_cell(x,y,reference.tile_index)
 		reference.state = enums.building_states.operate
 		reference.health = reference.health_max
+		yield(get_tree().create_timer(0.1), "timeout")
 		reference.update_pbar()
 
 
@@ -72,6 +75,8 @@ func unregister_structure(structure):
 		var x = index % 64
 		var y = floor(index/64)
 		structure_list[y*64+x] = structure
+	index = building_list.find(structure)
+	if index != -1 : building_list.remove(index)
 
 func change_tile(x,y,index):
 	map.set_cell(x,y,index)

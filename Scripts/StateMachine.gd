@@ -164,13 +164,20 @@ func research(my_target):
 		p.research_ready = false
 
 
+func gather_mana(my_target):
+	if p.research_ready == true : 
+		get_tree().get_root().get_node("World").add_mana(1)
+		p.research_ready = false
+
+
 func harvest(my_target):
 	if is_instance_valid(my_target) :
 		if p.strike_ready == true :
 			p.direction = str(get_new_direction(p.global_position,Vector2(target_structure_cell[0]*32+16,target_structure_cell[1]*32+16)))
 			var anim = "Strike_" + p.direction
 			p.get_node("AnimationPlayer").play(anim)
-			damage(my_target,p.damage)
+			if my_target.has_method("damage"):
+				damage(my_target,p.damage)
 			p.strike_ready = false
 			p.get_node("strike_cooldown").start()
 		return true

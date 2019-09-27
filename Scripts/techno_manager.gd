@@ -5,6 +5,7 @@ var techno_list = {	enums.techno.worker_speed 			: false,
 					enums.techno.harvest_speed_2 		: false,
 					enums.techno.harvest_amount 		: false,
 					enums.techno.worker_max_load		: false,
+					enums.techno.tower_damage			: false
 					}
 
 

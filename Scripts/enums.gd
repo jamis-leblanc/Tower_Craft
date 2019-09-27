@@ -12,6 +12,7 @@ enum task {	idle,
 			cultivate,
 			research,
 			operate,
+			gather_mana
 			}
 
 
@@ -31,6 +32,7 @@ enum jobs { 	jobless,
 				woodcutter,
 				builder,
 				scientist,
+				mage,
 				peasant,
 				defender
 			}
@@ -39,6 +41,8 @@ enum building_states {	prebuild,
 						spawn,
 						build,
 						operate,
+						offline,
+						no_mana,
 						exploding
 					}
 
@@ -50,6 +54,11 @@ enum techno {	worker_speed,
 				harvest_speed,
 				harvest_speed_2,
 				harvest_amount,
-				worker_max_load
+				worker_max_load,
+				tower_damage
 			}
-				
+
+enum mouse_state	{	build,
+						repair,
+						demolish
+					}

@@ -1,0 +1,62 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/Technologies/techno_tree.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/technologies/techno_tree_base_tower.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Technologies/upgrade_tower_damage.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Technologies/techno_test_2.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Technologies/techno_test_3.tscn" type="PackedScene" id=5]
+
+[node name="techno_tree_base_tower" instance=ExtResource( 1 )]
+margin_bottom = 146.0
+rect_min_size = Vector2( 0, 146 )
+script = ExtResource( 2 )
+
+[node name="VBoxContainer" parent="." index="0"]
+margin_bottom = 137.0
+
+[node name="HBoxContainer" parent="VBoxContainer" index="1"]
+margin_bottom = 132.0
+
+[node name="CenterContainer" type="CenterContainer" parent="VBoxContainer/HBoxContainer" index="0"]
+margin_right = 48.0
+margin_bottom = 124.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="upgrade_tower_damage" parent="VBoxContainer/HBoxContainer/CenterContainer" index="0" instance=ExtResource( 3 )]
+margin_left = 24.0
+margin_top = 62.0
+margin_right = 24.0
+margin_bottom = 62.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer" index="1"]
+margin_left = 52.0
+margin_right = 100.0
+margin_bottom = 124.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CenterContainer2" type="CenterContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer" index="0"]
+margin_right = 48.0
+margin_bottom = 60.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="techno_test_2" parent="VBoxContainer/HBoxContainer/VBoxContainer/CenterContainer2" index="0" instance=ExtResource( 4 )]
+margin_left = 24.0
+margin_top = 30.0
+margin_right = 24.0
+margin_bottom = 30.0
+
+[node name="CenterContainer3" type="CenterContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer" index="1"]
+margin_top = 64.0
+margin_right = 48.0
+margin_bottom = 124.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="techno_test_3" parent="VBoxContainer/HBoxContainer/VBoxContainer/CenterContainer3" index="0" instance=ExtResource( 5 )]
+margin_left = 24.0
+margin_top = 30.0
+margin_right = 24.0
+margin_bottom = 30.0

@@ -37,10 +37,19 @@ func _update(delta):
 
 
 		enums.task.harvest:
-			if target_structure_ref.health >= target_structure_ref.health_max :
-				build_task[1].build_complete()
+			if build_task.size()  == 0 :
 				current_task = enums.task.seek_home
-				task_manager.task_complete(build_task)
+			elif is_instance_valid(target_structure_ref) and target_structure_ref.health >= target_structure_ref.health_max :
+				if build_task[0] == enums.task_type.build:
+					build_task[1].build_complete()
+					current_task = enums.task.seek_home
+					task_manager.task_complete(build_task)
+				elif build_task[0] == enums.task_type.repair:
+					print("repair complete")
+					build_task[1].repair_complete()	
+					current_task = enums.task.seek_home
+					task_manager.task_complete(build_task)
+					
 			else : 
 				build(target_structure_ref)
 				

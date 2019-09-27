@@ -15,7 +15,7 @@ var anim_update = true
 var ready_to_seek = false
 var direction = "Up"
 var damage = 20
-var speed = randi() %40 + 80
+var speed = randi() %20 + 90
 
 var health = 3
 
@@ -368,7 +368,8 @@ func hit(target,cell):
 				direction = str(get_new_direction(self.global_position,Vector2(target.global_position.x,target.global_position.y)))
 			var anim = "Strike_" + direction
 			$AnimationPlayer.play(anim)
-			damage(target,damage)
+			if target.has_method("damage") :
+				damage(target,damage)
 			strike_ready = false
 			$strike_cooldown.start()
 		return true

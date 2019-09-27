@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://Scripts/worker2.gd" type="Script" id=1]
 [ext_resource path="res://GFX/worker_sprite.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Scripts/Job_Woodcutter.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/builder.gd" type="Script" id=5]
 [ext_resource path="res://Scripts/job_scientist.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/job_mage.gd" type="Script" id=7]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Idle_Down"
@@ -1182,6 +1183,9 @@ script = ExtResource( 5 )
 
 [node name="Scientist" type="Node" parent="Jobs"]
 script = ExtResource( 6 )
+
+[node name="Mage" type="Node" parent="Jobs"]
+script = ExtResource( 7 )
 
 [node name="Label" type="Label" parent="."]
 visible = false

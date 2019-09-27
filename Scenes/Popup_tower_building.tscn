@@ -1,0 +1,101 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/popup_tower_building.gd" type="Script" id=1]
+[ext_resource path="res://panel_style2.tres" type="StyleBox" id=2]
+[ext_resource path="res://panel_style.tres" type="StyleBox" id=3]
+[ext_resource path="res://small_font_16.tres" type="DynamicFont" id=4]
+[ext_resource path="res://GFX/upgrade_button.png" type="Texture" id=5]
+[ext_resource path="res://GFX/close_button.png" type="Texture" id=6]
+
+[node name="Popup_tower_building" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 113.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 96, 64 )
+custom_styles/panel = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+margin_left = 9.0
+margin_top = 5.0
+margin_right = 104.0
+margin_bottom = 86.0
+rect_min_size = Vector2( 80, 50 )
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+editor/display_folded = true
+margin_right = 95.0
+margin_bottom = 18.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_styles/panel = ExtResource( 3 )
+
+[node name="_name" type="Label" parent="PanelContainer/VBoxContainer/PanelContainer"]
+margin_left = 9.0
+margin_top = 5.0
+margin_right = 86.0
+margin_bottom = 9.0
+custom_fonts/font = ExtResource( 4 )
+text = "Tower name"
+align = 1
+autowrap = true
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 22.0
+margin_right = 95.0
+margin_bottom = 78.0
+columns = 2
+
+[node name="health_label" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+margin_top = 6.0
+margin_right = 70.0
+margin_bottom = 10.0
+custom_fonts/font = ExtResource( 4 )
+text = "Health  : XX / XX"
+
+[node name="upgrade_health" type="TextureButton" parent="PanelContainer/VBoxContainer/GridContainer"]
+margin_left = 74.0
+margin_right = 90.0
+margin_bottom = 16.0
+texture_normal = ExtResource( 5 )
+
+[node name="damage_label" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+margin_top = 26.0
+margin_right = 70.0
+margin_bottom = 30.0
+custom_fonts/font = ExtResource( 4 )
+text = "Damage : XX"
+
+[node name="upgrade_damage" type="TextureButton" parent="PanelContainer/VBoxContainer/GridContainer"]
+margin_left = 74.0
+margin_top = 20.0
+margin_right = 90.0
+margin_bottom = 36.0
+texture_normal = ExtResource( 5 )
+
+[node name="attack_speed_label" type="Label" parent="PanelContainer/VBoxContainer/GridContainer"]
+margin_top = 46.0
+margin_right = 70.0
+margin_bottom = 50.0
+custom_fonts/font = ExtResource( 4 )
+text = "Attack speed : XX"
+
+[node name="upgrade_attack_speed2" type="TextureButton" parent="PanelContainer/VBoxContainer/GridContainer"]
+margin_left = 74.0
+margin_top = 40.0
+margin_right = 90.0
+margin_bottom = 56.0
+texture_normal = ExtResource( 5 )
+
+[node name="TextureButton" type="TextureButton" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -6.37038
+margin_top = -6.0
+margin_right = 9.62962
+margin_bottom = 10.0
+texture_normal = ExtResource( 6 )
+[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]

@@ -69,28 +69,26 @@ func count_jobs_building(job,building):
 	return count
 
 func add_worker_to_struct(job,structure):
-	var worker_added = false
 	for i in workers_list :
 		if i[1] == job and i[2] == core:
 			i[2] = structure
 			i[0].home_building = structure
-			worker_added = true
-			break
-	if worker_added : emit_signal("add_worker")
-	get_tree().call_group("UI", "_update")
+			emit_signal("add_worker")
+			get_tree().call_group("UI", "_update")
+			return true
+	return false
+	
 
 
 func remove_worker_from_struc(job,structure):
-	var worker_removed = false
 	for i in workers_list :
 		if i[1] == job and i[2] == structure:
 			i[2] = core
 			i[0].home_building = core
-			worker_removed = true
-			break
-	if worker_removed : emit_signal("remove_worker")
-	get_tree().call_group("UI", "_update")
-	return worker_removed
+			emit_signal("remove_worker")
+			get_tree().call_group("UI", "_update")
+			return true
+	return false
 
 
 func clear_struct(structure):

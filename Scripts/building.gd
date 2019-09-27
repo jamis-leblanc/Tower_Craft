@@ -22,13 +22,19 @@ var _name = "Building"
 var popup_UI = "res://Scenes/Popup_regular_building.tscn"
 var health = 0
 var health_max = 100
+var mana_consumption = 0
+var max_user = 0
+var current_user = 0
 
 var reference = "res://Scenes/forester.tscn"
 
 onready var map = get_parent().get_node("nav/map_structure")
 onready var world = get_tree().get_root().get_node("World")
+onready var UI = get_tree().get_root().get_node("World/UI")
 
 signal add_structure_to_tilemap(x,y,reference)
+signal online()
+signal offline()
 
 func _ready():
 	self.connect("add_structure_to_tilemap",structure_manager,"add_structure_to_tilemap")
@@ -38,9 +44,9 @@ func _process(delta):
 	$Label.text = str(health)
 	if state == enums.building_states.spawn :
 		follow_cursor()
-	if state == enums.building_states.operate and $Sprite.visible == false :
-		$Sprite.set_visible(true)
-
+	if state == enums.building_states.no_mana :
+		use_mana(mana_consumption)
+		
 
 func follow_cursor():
 	
@@ -52,7 +58,9 @@ func follow_cursor():
 		self.emit_signal("add_structure_to_tilemap",tile.x,tile.y,self)
 		state = enums.building_states.build
 		$Sprite.set_visible(false)
-
+	if Input.is_action_just_pressed("mouse_right_clic") :
+		world.add_wood(cost)
+		self.queue_free()
 
 func check_position_validity():
 	is_valid = true
@@ -68,17 +76,22 @@ func check_position_validity():
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton \
 	and event.button_index == BUTTON_LEFT \
-	and event.is_pressed() \
-	and state == enums.building_states.operate :
-		if UI_on == false :
-			UI_on = true
-			UI_instance = load(popup_UI).instance()
-			UI_instance.set_z_index(10)
-			get_node("UI_anchor").add_child(UI_instance)
-			UI_instance.find_node("_name").text = _name
-		else :
-			UI_on = false
-			UI_instance.queue_free()
+	and event.is_pressed() :
+		if state == enums.building_states.operate \
+		and UI.mouse_state == enums.mouse_state.build :
+			if UI_on == false :
+				UI_on = true
+				UI_instance = load(popup_UI).instance()
+				UI_instance.set_z_index(10)
+				get_node("UI_anchor").add_child(UI_instance)
+				UI_instance.find_node("_name").text = _name
+			else :
+				UI_on = false
+				UI_instance.queue_free()
+		elif UI.mouse_state == enums.mouse_state.demolish :
+			destroy()
+		elif UI.mouse_state == enums.mouse_state.repair and health < health_max and task_manager.task_on_building(self) == false :
+			task_manager.new_task(enums.task_type.repair,self,null)
 
 
 func repair(amount):
@@ -91,12 +104,18 @@ func repair(amount):
 func build_complete() :
 	state = enums.building_states.operate
 	structure_manager.change_tile(tile.x,tile.y,tile_index)
+	map.update_bitmask_area(tile)
 	world.add_food(food)
 	get_tree().call_group("UI", "_update")
+	emit_signal("online")
+
+func repair_complete() :
+	pass
 
 
 func update_pbar():
 	$ProgressBar.value = health
+	get_tree().call_group("UI", "_update")
 	
 
 func damage(amount):
@@ -126,4 +145,35 @@ func delete():
 		get_tree().change_scene("res://Scenes/game_over.tscn")
 	else :
 		structure_manager.change_tile(tile.x,tile.y,5)
+		map.update_bitmask_area(tile)
 		queue_free()
+
+
+func _on_use_mana_timeout():
+	if state == enums.building_states.operate :
+		use_mana(mana_consumption)
+
+
+func use_mana(amount):
+	if world.mana >= amount :
+		if amount > 0:
+			world.remove_mana(amount)
+			if state == enums.building_states.no_mana :
+				state = enums.building_states.operate
+				emit_signal("online")
+	elif state == enums.building_states.operate :
+		state = enums.building_states.no_mana
+		emit_signal("offline")
+		
+
+func add_user():
+	if current_user < max_user :
+		return true
+	else :
+		return false
+		
+func remove_user():
+	if current_user > 0 :
+		return true
+	else :
+		return false

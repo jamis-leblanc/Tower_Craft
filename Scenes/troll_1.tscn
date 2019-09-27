@@ -1,18 +1,25 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/troll_1.gd" type="Script" id=2]
 [ext_resource path="res://GFX/enemies/troll.png" type="Texture" id=3]
 
+[sub_resource type="CircleShape2D" id=1]
+radius = 20.8616
+
 [node name="enemy" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
 [node name="Sprite" parent="." index="1"]
+position = Vector2( 1.80748, -11.5227 )
 texture = ExtResource( 3 )
-frame = 45
+
+[node name="Area2D" parent="." index="4"]
+position = Vector2( 0.903748, -10.619 )
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
-visible = false
+position = Vector2( -0.565682, -1.00461 )
+shape = SubResource( 1 )
 
-[node name="CollisionShape2D" parent="detection_area" index="0"]
-visible = false
+[node name="detection_area" parent="." index="5"]
+position = Vector2( 0, -8.13368 )

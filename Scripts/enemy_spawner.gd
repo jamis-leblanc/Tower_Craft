@@ -1,8 +1,11 @@
 extends Node2D
 
 var wave = 1
-var wave_difficulty = 0
-var difficulty_factor = 2
+var wave_difficulty = 2
+var wave_points = wave_difficulty
+var difficulty_factor = 3
+var wave_time_factor = 0.9862
+var enemy_spawn_time = 0.5
 
 onready var spawn_point_list  = {	0 : $spawn_point_collection/spawn_point_1,
 									1 : $spawn_point_collection/spawn_point_2,
@@ -12,7 +15,8 @@ onready var spawn_point_list  = {	0 : $spawn_point_collection/spawn_point_1,
 
 
 onready var enemy_cost_list = 	{ 	0 : [ 1 , "res://Scenes/enemy.tscn" ],
-									1 : [ 3 , "res://Scenes/troll_1.tscn" ]
+									1 : [ 8 , "res://Scenes/troll_1.tscn" ],
+									2 : [ 20 , "res://Scenes/grunt_1.tscn" ]
 								}
 
 
@@ -25,14 +29,14 @@ func _process(delta):
 	if spawning == true and spawn_ok == true:
 		var enemy_rand = randi() %enemy_cost_list.size()
 		var enemy_cost = enemy_cost_list[enemy_rand][0]
-		while enemy_cost > wave_difficulty : 
+		while enemy_cost > wave_points : 
 			enemy_rand = randi() %enemy_cost_list.size()
 			enemy_cost = enemy_cost_list[enemy_rand][0]
 			
-		wave_difficulty -= enemy_cost
+		wave_points -= enemy_cost
 		spawn_enemy(enemy_cost_list[enemy_rand][1])
 		spawn_ok = false
-		if wave_difficulty > 0 :
+		if wave_points > 1 :
 			$enemy_spawn_timer.start()
 		else :
 			print("wave end")
@@ -51,10 +55,17 @@ func pick_spawn_point():
 
 
 func setup_wave_spec():
-	wave_difficulty = wave * difficulty_factor
-	print("wave start")
+	set_wave_points()
+	$enemy_spawn_timer.wait_time = enemy_spawn_time / wave
+	$wave_timer.wait_time = $wave_timer.wait_time * wave_time_factor
+	print(str($wave_timer.wait_time))
+	print("wave start : " + str(wave))
 	spawning = true
 	spawn_ok = true
+
+
+func set_wave_points():
+	wave_points = wave * difficulty_factor
 
 
 func spawn_enemy(ref):
@@ -64,7 +75,6 @@ func spawn_enemy(ref):
 
 
 func _on_wave_timer_timeout():
-	print("timeout")
 	new_wave()
 
 

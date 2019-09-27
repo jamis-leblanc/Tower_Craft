@@ -7,6 +7,7 @@
 script = ExtResource( 2 )
 
 [node name="Sprite" parent="." index="0"]
+vframes = 6
 frame = 0
 
 [node name="Spawn_cooldown" type="Timer" parent="." index="1"]

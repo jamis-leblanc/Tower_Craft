@@ -2,9 +2,9 @@ extends "res://Scripts/building.gd"
 
 func _init():
 	reference = "res://Scenes/core.tscn"
-	food = 4
+	food = 8
 	size = 3
-	health_max = 100
+	health_max = 500
 	$ProgressBar.max_value = health_max
 	tile_index = 9
 	

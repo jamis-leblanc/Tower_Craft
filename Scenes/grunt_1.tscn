@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/grunt_1.gd" type="Script" id=2]
+[ext_resource path="res://GFX/enemies/grunt.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 20.9701
+
+[node name="enemy" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2( 0, -12.2377 )
+texture = ExtResource( 3 )
+flip_h = true
+frame = 8
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+visible = false
+position = Vector2( -0.313538, -4.27922 )
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D" parent="detection_area" index="0"]
+visible = false
+position = Vector2( 0, -12.2377 )

@@ -5,7 +5,7 @@ var techno_list = [	"res://Scenes/Technologies/techno_test_1.tscn",
 					"res://Scenes/Technologies/techno_test_3.tscn"
 					]
 
-var _name = "Technology tree name"
+var _name = "techno tree test 1"
 var tooltip = "Technology tooltip"
 
 

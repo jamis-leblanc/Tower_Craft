@@ -6,7 +6,9 @@ func start_job():
 
 
 func quit_job():
-	print("quit woodcutter")
+	print("quit woodcutter : target cell = " + str(target_cell))
+	if target_cell != null :
+		free_map_char_cell(target_cell)
 
 
 func _update(delta):

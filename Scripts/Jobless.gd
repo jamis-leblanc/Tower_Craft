@@ -7,6 +7,8 @@ func start_job():
 
 func quit_job():
 	print("quit jobless")
+	if target_cell != null :
+		free_map_char_cell(target_cell)
 
 
 func _update(delta):
