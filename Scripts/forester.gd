@@ -9,7 +9,9 @@ signal new_tree(x,y,growth)
 func _init():
 	reference = "res://Scenes/forester.tscn"
 	size = 2
-	cost = 200
+	cost = units_stats.forester_hut_cost
+	health_max = units_stats.forester_hut_health_max
+	$ProgressBar.max_value = health_max
 	tile_index = 8
 	mouse_offset = fmod(size+1,2) * Vector2(16,16)	# mouse_offset = 16,16 if size is en even number,  0,0 otherwise
 	position_offset = fmod(size,2) * Vector2(16,16)	# position_offset = 16,16 if size is en odd number,  0,0 otherwise

@@ -5,7 +5,9 @@ var nbr_scientist = 0
 func _init():
 	reference = "res://Scenes/laboratory.tscn"
 	size = 3
-	cost = 250
+	cost = units_stats.laboratory_cost
+	health_max = units_stats.laboratory_health_max
+	$ProgressBar.max_value = health_max
 	tile_index = 17
 	building_time = 5
 	UI_offset = Vector2(64,-64)

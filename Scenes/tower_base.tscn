@@ -43,6 +43,7 @@ hframes = 12
 frame = 34
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
+visible = true
 shape = SubResource( 1 )
 
 [node name="UI_anchor" parent="." index="2"]

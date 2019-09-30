@@ -177,3 +177,8 @@ func remove_user():
 		return true
 	else :
 		return false
+
+func _on_ProgressBar_value_changed(value):
+	if health == health_max :
+		$ProgressBar.set_visible(false)
+	else : $ProgressBar.set_visible(true)

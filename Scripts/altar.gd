@@ -3,7 +3,9 @@ extends "res://Scripts/building.gd"
 func _init():
 	reference = "res://Scenes/altar.tscn"
 	size = 2
-	cost = 200
+	cost = units_stats.altar_cost
+	health_max = units_stats.altar_health_max
+	$ProgressBar.max_value = health_max
 	tile_index = 22
 	building_time = 5
 	UI_offset = Vector2(64,-64)

@@ -3,9 +3,12 @@ extends Node2D
 var wave = 1
 var wave_difficulty = 2
 var wave_points = wave_difficulty
+var wave_difficulty_multiplier = 1
+var wave_difficulty_text = ""
 var difficulty_factor = 3
 var wave_time_factor = 0.9862
-var enemy_spawn_time = 0.5
+var enemy_spawn_time = 1
+var spawn_direction = "test"
 
 onready var spawn_point_list  = {	0 : $spawn_point_collection/spawn_point_1,
 									1 : $spawn_point_collection/spawn_point_2,
@@ -25,6 +28,11 @@ var spawning = false
 var spawn_ok = true
 
 
+func _ready():
+	pick_spawn_point()
+	get_tree().call_group("UI", "_update")
+
+
 func _process(delta):
 	if spawning == true and spawn_ok == true:
 		var enemy_rand = randi() %enemy_cost_list.size()
@@ -39,33 +47,45 @@ func _process(delta):
 		if wave_points > 1 :
 			$enemy_spawn_timer.start()
 		else :
-			print("wave end")
 			wave += 1
 			spawning = false
-			$wave_timer.start()
+			new_wave()
+
 
 
 func new_wave():
 	pick_spawn_point()
-	setup_wave_spec()	
+	$wave_timer.start()
+	get_tree().call_group("UI", "_update")
+	
 
 
 func pick_spawn_point():
-	spawn_point = spawn_point_list[randi() %spawn_point_list.size()]
+	var index = randi() %spawn_point_list.size()
+	spawn_point = spawn_point_list[index]
+	match index :
+		0: spawn_direction = "North"
+		1: spawn_direction = "West"
+		2: spawn_direction = "East"
+		3: spawn_direction = "South"
+	
+	if wave_difficulty_multiplier > 1 : wave_difficulty_text = "Average"
+	elif wave_difficulty_multiplier > 1.2 : wave_difficulty_text = "Strong"
+	else : wave_difficulty_text = "Weak"
+
 
 
 func setup_wave_spec():
 	set_wave_points()
 	$enemy_spawn_timer.wait_time = enemy_spawn_time / wave
 	$wave_timer.wait_time = $wave_timer.wait_time * wave_time_factor
-	print(str($wave_timer.wait_time))
-	print("wave start : " + str(wave))
 	spawning = true
 	spawn_ok = true
 
 
 func set_wave_points():
-	wave_points = wave * difficulty_factor
+	wave_difficulty_multiplier = (randf()/2 + 0.85)
+	wave_points = wave * difficulty_factor * wave_difficulty_multiplier
 
 
 func spawn_enemy(ref):
@@ -75,7 +95,7 @@ func spawn_enemy(ref):
 
 
 func _on_wave_timer_timeout():
-	new_wave()
+	setup_wave_spec()	
 
 
 func _on_enemy_spawn_timer_timeout():

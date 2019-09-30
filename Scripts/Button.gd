@@ -4,14 +4,6 @@ var repair_cursor = load("res://GFX/repair_cursor.png")
 var demolish_cursor = load("res://GFX/demolish_cursor.png")
 var mouse_state = enums.mouse_state.build
 
-
-func _process(delta):
-	if Input.is_action_just_pressed("mouse_right_clic") :
-		$repair_button.set_pressed(false)
-		$demolish_button.set_pressed(false)
-		Input.set_custom_mouse_cursor(null)
-		mouse_state = enums.mouse_state.build
-
 var notif_dict = 	{
 					"missing_ress" : 				"Not enought wood, harvest more.",
 					"missing_food" : 				"Not enought food, build more farm.",
@@ -25,19 +17,40 @@ var notif_dict = 	{
 
 
 onready var world = get_tree().get_root().get_node("World")
+onready var spawner = get_tree().get_root().get_node("World/enemy_spawner")
 
 
 func _ready():
 	add_to_group("UI")
+	$Button.text = "Forester Hut : " + str(units_stats.forester_hut_cost)
+	$Button3.text = "Woodcutter : " + str(units_stats.woodcutter_cost)
+	$Button4.text = "Farm : " + str(units_stats.farm_cost)
+	$Button5.text = "Laboratory : " + str(units_stats.laboratory_cost)
+	$Button6.text = "Base Tower : " + str(units_stats.base_tower_cost)
+	$Button7.text = "Altar : " + str(units_stats.altar_cost)
+	$Button8.text = "Wall : " + str(units_stats.base_wall_cost)
+
+
+func _process(delta):
+	if Input.is_action_just_pressed("mouse_right_clic") :
+		$repair_button.set_pressed(false)
+		$demolish_button.set_pressed(false)
+		Input.set_custom_mouse_cursor(null)
+		mouse_state = enums.mouse_state.build
 
 
 func _update():
 	
+	print("update UI")
 	$MarginContainer/HBoxContainer2/HBoxContainer/Wood_Label.text =  str(world.wood)
 	$MarginContainer/HBoxContainer2/HBoxContainer2/Food_Label.text = str(worker_manager.workers_list.size()) + "/" + str(world.food) 
 	$MarginContainer/HBoxContainer2/HBoxContainer3/Research_Label.text = str(world.research)
 	$MarginContainer/HBoxContainer2/HBoxContainer4/mana_Label.text = str(world.mana)
-
+	$PanelContainer/VBoxContainer/wave_nbr.text = "Current wave : " + str(spawner.wave)
+	$PanelContainer/VBoxContainer/wave_direction.text = "Is coming from : " + spawner.spawn_direction
+	$PanelContainer/VBoxContainer/wave_difficulty.text = "Difficulty : " + spawner.wave_difficulty_text
+	print(spawner.spawn_direction)
+	
 func _on_Button_pressed():
 	spawn("res://Scenes/forester.tscn")
 

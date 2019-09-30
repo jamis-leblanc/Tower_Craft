@@ -4,7 +4,8 @@ func _init():
 	reference = "res://Scenes/core.tscn"
 	food = 8
 	size = 3
-	health_max = 500
+	health_max = units_stats.core_health_max
+	health = health_max
 	$ProgressBar.max_value = health_max
 	tile_index = 9
 	

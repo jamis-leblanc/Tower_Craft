@@ -4,7 +4,8 @@ extends "res://Scripts/building.gd"
 func _init():
 	reference = "res://Scenes/wall.tscn"
 	size = 1
-	cost = 30
+	cost = units_stats.base_wall_cost
+	health_max = units_stats.base_wall_health_max
 	tile_index = 23
 	building_time = 5
 	mouse_offset = fmod(size+1,2) * Vector2(16,16)	# mouse_offset = 16,16 if size is en even number,  0,0 otherwise
