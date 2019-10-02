@@ -22,7 +22,14 @@ var current_task = enums.task.idle
 
 
 func _process(delta):
-	p.get_node("Label").text = str(current_task)
+	print(str(target_structure_ref))
+	if target_structure_ref != null :
+		if "_name" in target_structure_ref :
+			p.get_node("Label").text = str(target_structure_ref._name)
+		else :
+			p.get_node("Label").text = str(target_structure_ref.name)
+	else : p.get_node("Label").text = "undefined"
+	
 	mytile = map.world_to_map(p.position)
 
 

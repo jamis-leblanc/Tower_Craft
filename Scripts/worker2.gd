@@ -35,8 +35,6 @@ onready var mytile  = map.world_to_map(self.position)
 
 
 func _process(delta):
-	$Label2.text = str(carried_ressource)
-	$Label3.text = str(home_building)
 	get_node(jobs[current_job])._update(delta)
 
 

@@ -1188,14 +1188,13 @@ script = ExtResource( 6 )
 script = ExtResource( 7 )
 
 [node name="Label" type="Label" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -29.0
 margin_top = -26.0
 margin_right = 31.0
 margin_bottom = -12.0
-text = "Task Step"
+text = "Label"
 align = 1
 
 [node name="Label2" type="Label" parent="."]
@@ -1206,7 +1205,7 @@ margin_left = -34.0
 margin_top = -37.0
 margin_right = 37.0
 margin_bottom = -23.0
-text = "0"
+text = "Label2"
 align = 1
 
 [node name="Label3" type="Label" parent="."]
@@ -1217,7 +1216,7 @@ margin_left = -34.0
 margin_top = -48.0
 margin_right = 37.0
 margin_bottom = -34.0
-text = "Cell Found"
+text = "Label3"
 align = 1
 
 [node name="strike_cooldown" type="Timer" parent="."]

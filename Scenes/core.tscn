@@ -20,6 +20,7 @@ frame = 4
 position = Vector2( 16, 16.2222 )
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
+visible = true
 position = Vector2( -16, -16 )
 shape = SubResource( 1 )
 

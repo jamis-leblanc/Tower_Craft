@@ -12,4 +12,7 @@ frame = 0
 [node name="Spawn_cooldown" type="Timer" parent="." index="1"]
 wait_time = 10.0
 autostart = true
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+visible = true
 [connection signal="timeout" from="Spawn_cooldown" to="." method="_on_Spawn_cooldown_timeout"]
